@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".FavorisActivity" android:label="Favoris"></activity>
+        <activity android:name=".HorairesActivity" android:label="Horaires"></activity>
+        <activity android:name=".ListesActivity" android:label="Listes métros/stations"></activity>
+        <activity android:name=".QRCodeActivity" android:label="QR Code"></activity>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
