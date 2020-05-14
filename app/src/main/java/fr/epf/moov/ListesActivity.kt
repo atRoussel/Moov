@@ -24,11 +24,12 @@ class ListesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_listes)
 
 
+
         val service = retrofit().create(RATPService::class.java)
 
         runBlocking {
             val result = service.listLinesMetros("metros")
-Log.d("APIresult", result.toString())
+            Log.d("APIresult", result.toString())
 
             result.result.metros?.map {
                 Log.d("APIresult", "OK")
