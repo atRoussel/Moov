@@ -3,6 +3,7 @@ package fr.epf.moov
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import fr.epf.moov.service.RATPService
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -12,6 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.squareup.moshi.JsonAdapter
 import fr.epf.moov.service.ModelRatp
+import kotlinx.android.synthetic.main.activity_listes.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,8 +25,6 @@ class ListesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listes)
 
-
-
         val service = retrofit().create(RATPService::class.java)
 
         runBlocking {
@@ -32,10 +32,17 @@ class ListesActivity : AppCompatActivity() {
             Log.d("APIresult", result.toString())
 
             result.result.metros?.map {
-                Log.d("APIresult", "OK")
                 Log.d("APIresult", "${it.code} / ${it.name}")
+                MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id))
             }
         }
+
+        //Implementing
+        setContentView(R.layout.activity_listes)
+        metroLines_recyclerview.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        metroLines_recyclerview.adapter = MetroLineAdapter(MetroLine.all)
 
 
     }}
