@@ -22,6 +22,11 @@ interface RATPService {
     suspend fun listStationsMetros(@Path("type") type : String,
                                    @Path("code") code : String
     ) : StationModel.Welcome
+
+    @GET("v4/lines/{type}/{code}")
+    suspend fun getStation( @Path("type") type : String,
+                            @Path("code") code : String
+    ) : LineModel.Welcome
 }
 
 
@@ -39,6 +44,26 @@ data class metros (
     val name : String,
     val directions : String,
     val id : Int)
+
+    data class Metadata (
+        val call : String,
+        val date : String,
+        val version : Int
+    )
+}
+
+object LineModel{
+    data class Welcome (
+        val result : Result,
+        val _metadata : Metadata
+    )
+
+    data class Result (
+        val code : String,
+        val name : String,
+        val directions : String,
+        val id : Int
+    )
 
     data class Metadata (
         val call : String,

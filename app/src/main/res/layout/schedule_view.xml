@@ -3,37 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
-    android:layout_height="150dp"
-    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
     android:layout_gravity="center_horizontal"
     tools:context=".HorairesActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/station_name_textview"/>
+
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/code_metro_textview"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="1 mn"
+            android:background="@drawable/border_schedule"
             android:id="@+id/schedule_textview"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/destination_textview"/>
-    </LinearLayout>
+
 
 
 
