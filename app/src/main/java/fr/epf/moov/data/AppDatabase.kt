@@ -6,7 +6,7 @@ import fr.epf.moov.model.Station
 
 @Database(entities = [Station::class], version= 1)
 
-abstract class AppDataBase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getStationDao() : StationDao
 }
