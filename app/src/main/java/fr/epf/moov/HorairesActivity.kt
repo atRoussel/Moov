@@ -1,21 +1,28 @@
 package fr.epf.moov
 
+import android.app.Activity
+import android.content.res.Resources
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_horaires.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
+import kotlinx.android.synthetic.main.activity_horaires.*
 import kotlinx.coroutines.runBlocking
-import java.io.IOException
 import java.io.InputStream
-import java.util.*
+import java.net.URL
 
 
 class HorairesActivity : AppCompatActivity() {
@@ -26,7 +33,8 @@ class HorairesActivity : AppCompatActivity() {
     private var stationDao: StationDao? = null
     val service = retrofit().create(RATPService::class.java)
     var listDestinations: List<String>? = null
-    var way : String = "A"
+    var way: String = "A"
+    var url: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +64,7 @@ class HorairesActivity : AppCompatActivity() {
 
 
         schedules_button.setOnClickListener {
+
             val stationName = autoComplete_stations.text.toString()
             var slug = ""
             var type = ""
@@ -69,14 +78,11 @@ class HorairesActivity : AppCompatActivity() {
                     Log.d("Stations", slug)
                 }
             }
-            Log.d("CCC", type)
-            Log.d("CCC", code)
+
 
             runBlocking {
                 val result = service.getStation(type, code)
-                Log.d("CCC", result.result.directions)
                 listDestinations = getListDestinations(result.result.directions)
-                Log.d("CCC", listDestinations.toString())
             }
 
             runBlocking {
@@ -99,47 +105,83 @@ class HorairesActivity : AppCompatActivity() {
             retour_textview.text = listDestinations?.get(1)
 
 
-            destinations_exchange.setOnClickListener {
-                if(way == "A"){
-                    way = "R"
-                    runBlocking {
-                        val result = service.getSchedules(type, code, slug, way)
+            val cityCsv = resources.openRawResource(R.raw.pictogrammes)
+            val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
 
-                        schedulesList.clear()
+            val drawableName : String = "m${code}"
 
-                        result.result.schedules.map {
-                            var schedule = it.message
-                            schedulesList.add(schedule)
+           var resources: Resources = this.resources
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
 
-                        }
-                    }
-                    schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
-                    aller_textview.text = listDestinations?.get(1)
-                    retour_textview.text = listDestinations?.get(0)
-                }
-                else if (way == "R"){
-                    way = "A"
-                    runBlocking {
-                        val result = service.getSchedules(type, code, slug, way)
 
-                        schedulesList.clear()
-
-                        result.result.schedules.map {
-                            var schedule = it.message
-                            schedulesList.add(schedule)
-
-                        }
-                    }
-                    schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
-                    aller_textview.text = listDestinations?.get(0)
-                    retour_textview.text = listDestinations?.get(1)
+         /* listPictogrammes.map {
+                var listp = getListPictogramme(it.toString())
+                if (listp[1] == "M${code}") {
+                    url = listp[0]
                 }
             }
 
+            val policy =
+                StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)*/
+
+
+          /* val imageview: ImageView = findViewById(R.id.pictogram_imageview)
+            fetchSvg(this, url!!, pictogram_imageview)*/
+
+
+        /*Glide.with(this)
+                .load(url)
+                .centerCrop()
+                .into(pictogram_imageview)*/
+
+
+
+            global_schedule_layout.visibility = View.VISIBLE
+
+
+        destinations_exchange.setOnClickListener {
+            if (way == "A") {
+                way = "R"
+                runBlocking {
+                    val result = service.getSchedules(type, code, slug, way)
+
+                    schedulesList.clear()
+
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+
+                    }
+                }
+                schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                aller_textview.text = listDestinations?.get(1)
+                retour_textview.text = listDestinations?.get(0)
+            } else if (way == "R") {
+                way = "A"
+                runBlocking {
+                    val result = service.getSchedules(type, code, slug, way)
+
+                    schedulesList.clear()
+
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+
+                    }
+                }
+                schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                aller_textview.text = listDestinations?.get(0)
+                retour_textview.text = listDestinations?.get(1)
+            }
         }
 
+    }
 
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -147,7 +189,11 @@ class HorairesActivity : AppCompatActivity() {
 
 
     fun getListDestinations(destinations: String): List<String> {
-        var listDestination = listOf<String>()
         return destinations.split(" / ")
+    }
+
+    fun getListPictogramme(pictogrammes: String): List<String> {
+        val stringPictogramme = pictogrammes.substring(1, pictogrammes.length - 1)
+        return stringPictogramme.split(";")
     }
 }

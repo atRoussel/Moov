@@ -69,4 +69,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.7.3'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.pixplicity.sharp:library:1.1.0'
 }
