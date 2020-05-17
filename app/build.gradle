@@ -73,4 +73,5 @@ dependencies {
     implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.7.3'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.pixplicity.sharp:library:1.1.0'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 }
