@@ -23,6 +23,7 @@ class DetailLineActivity: AppCompatActivity() {
         val service = retrofit().create(RATPService::class.java)
         runBlocking {
             val result = service.listStationsMetros("metros", "${code}")
+            Station.all.clear()
             result.result.stations?.map {
                 Station.all.add(Station("${it.name}", "${it.slug}"))
             }
