@@ -20,5 +20,8 @@ interface StationDao {
     @Query("delete from stations")
     suspend fun deleteStations()
 
+    @Query("delete from stations where id = :id")
+    suspend fun deleteStation(id : Int)
+
 
 }

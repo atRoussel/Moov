@@ -8,5 +8,7 @@ data class Station ( @PrimaryKey (autoGenerate = true) val id : Int,
                      val typeLine : String,
                      val codeLine : String,
                      val nameStation : String,
-                     val slugStation : String)
+                     val slugStation : String,
+                     val directionLine : String?,
+                     var favoris : Boolean)
 

@@ -1,4 +1,4 @@
-package fr.epf.moov
+package fr.epf.moov.model
 
 data class MetroLine (val code: String, val name: String, val directions: String, val id: Int)
 {
