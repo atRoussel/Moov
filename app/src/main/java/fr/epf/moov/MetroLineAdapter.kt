@@ -29,11 +29,10 @@ class MetroLineAdapter(val metroLines: List<MetroLine>) : RecyclerView.Adapter<M
         )*/
 
         holder.metroLineView.setOnClickListener{
-            Log.d("EPF", "$metro")
-            //val intent = Intent(it.context, DetailClientActivity::class.java)
-            //intent.putExtra("lastname", client.lastname)
-            //intent.putExtra("id", position)
-            //it.context.startActivity(intent)
+            val intent = Intent(it.context, DetailLineActivity::class.java)
+            intent.putExtra("directions", metro.directions)
+            intent.putExtra("code", metro.code)
+            it.context.startActivity(intent)
         }
     }
 }

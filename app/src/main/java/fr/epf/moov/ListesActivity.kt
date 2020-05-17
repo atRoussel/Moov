@@ -29,20 +29,14 @@ class ListesActivity : AppCompatActivity() {
 
         runBlocking {
             val result = service.listLinesMetros("metros")
-            Log.d("APIresult", result.toString())
-
             result.result.metros?.map {
-                Log.d("APIresult", "${it.code} / ${it.name}")
                 MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id))
             }
         }
 
-        //Implementing
-        setContentView(R.layout.activity_listes)
         metroLines_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         metroLines_recyclerview.adapter = MetroLineAdapter(MetroLine.all)
-
-
-    }}
+    }
+}

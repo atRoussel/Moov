@@ -16,6 +16,7 @@
         <activity android:name=".HorairesActivity" android:label="Horaires"></activity>
         <activity android:name=".ListesActivity" android:label="Listes métros/stations"></activity>
         <activity android:name=".QRCodeActivity" android:label="QR Code"></activity>
+        <activity android:name=".DetailLineActivity" android:label="Details line métro"></activity>
 
         <activity android:name=".SplashActivity">
             <intent-filter>
