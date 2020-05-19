@@ -31,7 +31,9 @@ class ListesActivity : AppCompatActivity() {
             val result = service.listLinesMetros("metros")
             MetroLine.all.clear()
             result.result.metros?.map {
-                MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id))
+                if("${it.code}" != "Fun" && "${it.code}" != "Orv") {
+                    MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id))
+                }
             }
         }
 

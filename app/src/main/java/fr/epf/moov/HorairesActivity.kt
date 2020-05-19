@@ -104,12 +104,10 @@ class HorairesActivity : AppCompatActivity() {
             aller_textview.text = listDestinations?.get(0)
             retour_textview.text = listDestinations?.get(1)
 
-
             val cityCsv = resources.openRawResource(R.raw.pictogrammes)
             val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
 
             val drawableName : String = "m${code}"
-
            var resources: Resources = this.resources
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)

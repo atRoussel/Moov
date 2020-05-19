@@ -8,23 +8,42 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:layout_margin="8dp"
             android:id="@+id/metroLine_imageview"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
-        <TextView
-            android:layout_marginLeft="8dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="21dp"
-            tools:text="Directions"
-            android:id="@+id/metroLine_directions_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="21dp"
+                tools:text="DirectionA"
+                android:id="@+id/metroLine_directionsA_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/metroLine_directionsR_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textSize="21dp"
+                tools:text="DirectionR" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
