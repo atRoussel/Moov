@@ -9,6 +9,7 @@ import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
+import fr.epf.moov.service.retrofit
 import kotlinx.coroutines.runBlocking
 
 class SplashActivity  : AppCompatActivity () {
@@ -40,8 +41,9 @@ class SplashActivity  : AppCompatActivity () {
                         "metros",
                         code,
                         it.name,
-                        it.slug
-                    )
+                        it.slug,
+                        null,
+                    false)
                     stationDao?.addStation(station)
                 }
             }

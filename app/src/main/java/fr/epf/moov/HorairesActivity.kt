@@ -19,6 +19,7 @@ import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
+import fr.epf.moov.service.retrofit
 import kotlinx.android.synthetic.main.activity_horaires.*
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream

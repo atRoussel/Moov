@@ -1,18 +1,16 @@
-package fr.epf.moov
+package fr.epf.moov.service
 
 import android.content.Context
 import android.util.Log
+import android.widget.Adapter
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pixplicity.sharp.Sharp
-import com.squareup.moshi.FromJson
-import kotlinx.coroutines.flow.callbackFlow
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 import java.io.InputStream
 
@@ -50,6 +48,23 @@ fun AppCompatActivity.fetchSvg(context: Context, url : String, imageView: ImageV
             .client(client)
             .build()
     }
+
+
+fun Adapter.retrofit(): Retrofit {
+    val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+    val client = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .addNetworkInterceptor(StethoInterceptor())
+        .build()
+
+    return Retrofit.Builder()
+        .baseUrl("https://api-ratp.pierre-grimaud.fr/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(client)
+        .build()
+}
 
 
 

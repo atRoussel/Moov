@@ -1,18 +1,17 @@
 package fr.epf.moov
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import fr.epf.moov.model.Station
 import kotlinx.android.synthetic.main.activity_detail_line.*
-import kotlinx.android.synthetic.main.activity_horaires.*
 import fr.epf.moov.service.RATPService
-import kotlinx.android.synthetic.main.activity_listes.*
+import fr.epf.moov.service.retrofit
 import kotlinx.coroutines.runBlocking
 
 class DetailLineActivity: AppCompatActivity() {
+
+    var ListStations : MutableList<fr.epf.moov.model.Station> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,15 +22,25 @@ class DetailLineActivity: AppCompatActivity() {
         val service = retrofit().create(RATPService::class.java)
         runBlocking {
             val result = service.listStationsMetros("metros", "${code}")
-            Station.all.clear()
+
+
             result.result.stations?.map {
-                Station.all.add(Station("${it.name}", "${it.slug}"))
+                val station = Station(
+                    0,
+                    "metros",
+                    code,
+                    it.name,
+                    it.slug,
+                    null,
+                false)
+                ListStations.add(station)
+
             }
         }
         station_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        station_recyclerview.adapter = StationAdapter(Station.all)
+        station_recyclerview.adapter = StationAdapter(ListStations)
 
     }
 }

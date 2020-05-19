@@ -12,7 +12,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.squareup.moshi.JsonAdapter
+import fr.epf.moov.model.MetroLine
 import fr.epf.moov.service.ModelRatp
+import fr.epf.moov.service.retrofit
 import kotlinx.android.synthetic.main.activity_listes.*
 import retrofit2.Call
 import retrofit2.Callback
