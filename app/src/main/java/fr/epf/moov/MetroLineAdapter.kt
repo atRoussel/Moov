@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import fr.epf.moov.model.MetroLine
+import fr.epf.moov.model.Traffic
 import kotlinx.android.synthetic.main.activity_horaires.*
 import kotlinx.android.synthetic.main.metroline_view.view.*
 
@@ -35,6 +37,11 @@ class MetroLineAdapter(val metroLines: List<MetroLine>) : RecyclerView.Adapter<M
         val id: Int =
             resources.getIdentifier(drawableName, "drawable", context.packageName)
         holder.metroLineView.metroLine_imageview.setImageResource(id)
+
+        if(Traffic.all[position].slug == "normal") {
+            holder.metroLineView.warning_imageview.setImageResource(R.drawable.empty)
+        } else holder.metroLineView.warning_imageview.setImageResource(R.drawable.attention)
+
         val directions_line = metro.directions.split(" / ")
 
         holder.metroLineView.metroLine_directionsA_text.text=directions_line[1]

@@ -1,5 +1,6 @@
 package fr.epf.moov
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,10 +26,15 @@ class StationAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Statio
     }
 
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
-
-
         val station = stations?.get(position)
         holder.stationView.station_name_text.text = "${station?.nameStation}"
+
+        holder.stationView.setOnClickListener{
+            val intent = Intent(it.context, DetailStationActivity::class.java)
+            intent.putExtra("name", station?.nameStation)
+            intent.putExtra("code", station?.codeLine)
+            it.context.startActivity(intent)
+        }
 
         }
 

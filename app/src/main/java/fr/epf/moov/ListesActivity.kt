@@ -27,18 +27,6 @@ class ListesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listes)
 
-        val service = retrofit().create(RATPService::class.java)
-
-        runBlocking {
-            val result = service.listLinesMetros("metros")
-            MetroLine.all.clear()
-            result.result.metros?.map {
-                if("${it.code}" != "Fun" && "${it.code}" != "Orv") {
-                    MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id))
-                }
-            }
-        }
-
         metroLines_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
