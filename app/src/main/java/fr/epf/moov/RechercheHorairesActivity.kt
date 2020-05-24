@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_horaires.*
 import kotlinx.coroutines.runBlocking
 
 
-class HorairesActivity : AppCompatActivity() {
+class RechercheHorairesActivity : AppCompatActivity() {
 
     var schedulesList: MutableList<String> = mutableListOf()
     var allStations: List<Station>? = null
@@ -126,7 +126,7 @@ class HorairesActivity : AppCompatActivity() {
 
                 }
             }
-            Log.d("OU", schedulesList.toString())
+
 
             schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
 

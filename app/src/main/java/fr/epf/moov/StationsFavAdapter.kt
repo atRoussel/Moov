@@ -1,25 +1,45 @@
 package fr.epf.moov
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Typeface
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
-import fr.epf.moov.service.retrofit
 import kotlinx.android.synthetic.main.stationfav_view.view.*
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<StationFavAdapter.StationFavViewHolder>()  {
 
-    private lateinit var context : Context
+//TODO : créer des animations de déroulement
+
+class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<StationFavAdapter.StationFavViewHolder>() {
+
+    private lateinit var context: Context
     private var savedStationDao: StationDao? = null
+    private lateinit var service: Retrofit
+    private var scheduleVisible: Boolean = false
+    var schedulesList: MutableList<String> = mutableListOf()
+    var way = ""
+    private var stringDestinations : MutableList<String>? = mutableListOf()
+
 
     class StationFavViewHolder(val stationFavView: View) : RecyclerView.ViewHolder(stationFavView)
 
@@ -42,12 +62,35 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
 
 
 
+
         return StationFavViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: StationFavViewHolder, position: Int) {
         val station = stations?.get(position)
-        val stringDestinations = getListDestinations(station?.directionLine)
+        way = ""
+        scheduleVisible = false
+        stringDestinations!!.clear()
+        stringDestinations = getListDestinations(station?.directionLine)
+
+        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val client = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(StethoInterceptor())
+            .build()
+
+        service = Retrofit.Builder()
+            .baseUrl("https://api-ratp.pierre-grimaud.fr/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+
+
+        holder.stationFavView.schedules_recyclerview.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        holder.stationFavView.schedules_recyclerview.itemAnimator = null
 
         holder.stationFavView.stationfav_name_textview.text = "${station?.nameStation}"
         holder.stationFavView.aller_textview.text = "${stringDestinations?.get(0)}"
@@ -62,36 +105,118 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
 
         holder.stationFavView.fav_imageview.setImageResource(R.drawable.fav_full)
 
+       holder.stationFavView.schedules_recyclerview.visibility = View.GONE
 
-        holder.stationFavView.fav_imageview.setOnClickListener {
-            if (station?.favoris == true){
-                station?.favoris=false
-                runBlocking {
-                    savedStationDao?.deleteStation(station?.id)
+        runBlocking {
+            way = "A"
+            val result = service.create(RATPService::class.java).getSchedules(
+                station!!.typeLine,
+                station?.codeLine,
+                station?.slugStation,
+                way
+            )
+
+            result.result.schedules.map {
+                var schedule = it.message
+                schedulesList.add(schedule)
+            }
+
+            holder.stationFavView.schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)}
+
+
+            holder.stationFavView.fav_imageview.setOnClickListener {
+                if (station?.favoris == true) {
+                    station?.favoris = false
+                    runBlocking {
+                        savedStationDao?.deleteStation(station?.id)
+                    }
+
+
+                    holder.stationFavView.fav_imageview.setImageResource(R.drawable.fav_empty)
+                    Toast.makeText(
+                        context,
+                        "La station a été supprimée des favoris",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else if (station?.favoris == false) {
+                    station?.favoris = true
+
+                    runBlocking {
+                        savedStationDao?.addStation(station)
+                    }
+
+                    holder.stationFavView.fav_imageview.setImageResource(R.drawable.fav_full)
+                    Toast.makeText(
+                        context,
+                        "La station a été rajoutée aux favoris",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+
                 }
+            }
+            holder.stationFavView.setOnClickListener {
+if(scheduleVisible == true){
+    holder.stationFavView.schedules_recyclerview.visibility = View.GONE
+    holder.stationFavView.destinations_exchange.visibility = View.INVISIBLE
+    scheduleVisible = false
+    }else{
+    holder.stationFavView.schedules_recyclerview.visibility = View.VISIBLE
+    holder.stationFavView.destinations_exchange.visibility = View.VISIBLE
+    scheduleVisible = true
+}
 
-                holder.stationFavView.fav_imageview.setImageResource(R.drawable.fav_empty)
-                Toast.makeText(context, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
 
-            } else if (station?.favoris == false){
-                station?.favoris = true
 
+
+            }
+
+
+        holder.stationFavView.destinations_exchange.setOnClickListener {
+            if (way == "A") {
+                way = "R"
                 runBlocking {
-                    savedStationDao?.addStation(station)
+                    val result =  service.create(RATPService::class.java).getSchedules(station!!.typeLine, station.codeLine, station.slugStation, way)
+
+                    schedulesList.clear()
+
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+
+                    }
                 }
+                holder.stationFavView.schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                holder.stationFavView.aller_textview.text = stringDestinations?.get(1)
+                holder.stationFavView.retour_textview.text = stringDestinations?.get(0)
+            } else if (way == "R") {
+                way = "A"
+                runBlocking {
+                    val result =  service.create(RATPService::class.java).getSchedules(station!!.typeLine, station.codeLine, station.slugStation, way)
 
-                holder.stationFavView.fav_imageview.setImageResource(R.drawable.fav_full)
-                Toast.makeText(context, "La station a été rajoutée aux favoris", Toast.LENGTH_SHORT).show()
+                    schedulesList.clear()
 
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+
+                    }
+                }
+                holder.stationFavView.schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                holder.stationFavView.aller_textview.text = stringDestinations?.get(0)
+                holder.stationFavView.retour_textview.text = stringDestinations?.get(1)
             }
         }
 
     }
-}
 
-fun getListDestinations(destinations: String?): List<String>? {
-    if (destinations != null) {
-        return destinations.split(" / ")
+
+        fun getListDestinations(destinations: String?): MutableList<String>? {
+            if (destinations != null) {
+                return destinations.split(" / ") as MutableList<String>
+            }
+            return null
+        }
     }
-    return null
-}
+

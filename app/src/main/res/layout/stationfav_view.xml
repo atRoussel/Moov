@@ -87,7 +87,7 @@
                 android:text="Porte de Clignancourt"
                 tools:ignore="MissingConstraints" />
 
-            <!--<ImageView
+            <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="15dp"
@@ -96,10 +96,31 @@
                 android:id="@+id/destinations_exchange"
                 android:src="@drawable/exchanging"
                 android:tint="@color/colorPrimaryDark"
+                android:visibility="invisible"
                 app:layout_constraintRight_toRightOf="@+id/schedule_layout"
-                app:layout_constraintTop_toTopOf="@+id/schedule_layout" /> -->
+                app:layout_constraintTop_toTopOf="@+id/schedule_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:id="@+id/schedules_recyclerview_layout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/schedules_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                tools:listitem="@layout/schedule_view" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -111,22 +111,22 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
 
     override fun handleResult(rawResult: Result?) {
         nameStation = rawResult?.text
-        Log.d("CCC", nameStation)
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Scan Result")
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton("Recommencer") { _, _ ->
                 scannerView!!.resumeCameraPreview(this)
             }
 
         builder.setNeutralButton("Voir les horaires") { _, _ ->
             Log.d("CCC", "Voir les horaires")
-                val intent = Intent(this, MainActivity :: class.java)
+                val intent = Intent(this, AfficherHorairesActivity :: class.java)
+            intent.putExtra("station", nameStation)
                 this.startActivity(intent)
 
         }
 
-        builder.setMessage("Station : ${nameStation}")
+        builder.setMessage(" Station : ${nameStation}")
         val alert: AlertDialog = builder.create()
         alert.show()
 

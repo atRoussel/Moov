@@ -34,8 +34,5 @@ class FavorisActivity : AppCompatActivity() {
 
         station_recyclerview.adapter = StationFavAdapter(favStations)
 
-
-
-
     }
 }

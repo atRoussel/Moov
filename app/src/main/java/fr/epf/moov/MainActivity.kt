@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
 
         horaires_button.setOnClickListener {
-            val intent = Intent(this, HorairesActivity::class.java)
+            val intent = Intent(this, RechercheHorairesActivity::class.java)
             startActivity(intent)
         }
 
