@@ -3,21 +3,17 @@ package fr.epf.moov
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.bumptech.glide.Glide
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import fr.epf.moov.adapter.ScheduleAdapter
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
@@ -25,11 +21,9 @@ import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
 import kotlinx.android.synthetic.main.activity_horaires.*
 import kotlinx.coroutines.runBlocking
-import java.io.InputStream
-import java.net.URL
 
 
-    class RechercheHorairesActivity : AppCompatActivity() {
+class RechercheHorairesActivity : AppCompatActivity() {
 
         var schedulesList: MutableList<String> = mutableListOf()
         var allStations: List<Station>? = null
@@ -113,7 +107,8 @@ import java.net.URL
                 Log.d("OU", schedulesList.toString())
 
 
-                schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                schedules_recyclerview.adapter =
+                    ScheduleAdapter(schedulesList)
 
                 station_name_textview.text = stationName
                 aller_textview.text = listDestinations?.get(0)
@@ -171,7 +166,8 @@ import java.net.URL
                                 schedulesList.add(schedule)
                             }
                         }
-                        schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                        schedules_recyclerview.adapter =
+                            ScheduleAdapter(schedulesList)
                         aller_textview.text = listDestinations?.get(1)
                         retour_textview.text = listDestinations?.get(0)
                     } else if (way == "R") {
@@ -184,7 +180,8 @@ import java.net.URL
                                 schedulesList.add(schedule)
                             }
                         }
-                        schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                        schedules_recyclerview.adapter =
+                            ScheduleAdapter(schedulesList)
                         aller_textview.text = listDestinations?.get(0)
                         retour_textview.text = listDestinations?.get(1)
                     }

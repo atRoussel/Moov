@@ -1,21 +1,16 @@
-package fr.epf.moov
+package fr.epf.moov.adapter
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Typeface
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import fr.epf.moov.R
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
@@ -121,7 +116,9 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 schedulesList.add(schedule)
             }
 
-            holder.stationFavView.schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)}
+            holder.stationFavView.schedules_recyclerview.adapter =
+                ScheduleAdapter(schedulesList)
+        }
 
 
             holder.stationFavView.fav_imageview.setOnClickListener {
@@ -187,7 +184,8 @@ if(scheduleVisible == true){
 
                     }
                 }
-                holder.stationFavView.schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                holder.stationFavView.schedules_recyclerview.adapter =
+                    ScheduleAdapter(schedulesList)
                 holder.stationFavView.aller_textview.text = stringDestinations?.get(1)
                 holder.stationFavView.retour_textview.text = stringDestinations?.get(0)
             } else if (way == "R") {
@@ -203,7 +201,8 @@ if(scheduleVisible == true){
 
                     }
                 }
-                holder.stationFavView.schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+                holder.stationFavView.schedules_recyclerview.adapter =
+                    ScheduleAdapter(schedulesList)
                 holder.stationFavView.aller_textview.text = stringDestinations?.get(0)
                 holder.stationFavView.retour_textview.text = stringDestinations?.get(1)
             }

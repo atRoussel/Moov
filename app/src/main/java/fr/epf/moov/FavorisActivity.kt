@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import fr.epf.moov.adapter.StationFavAdapter
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
@@ -32,7 +33,8 @@ class FavorisActivity : AppCompatActivity() {
             favStations = savedStationDao?.getStations()
         }
 
-        station_recyclerview.adapter = StationFavAdapter(favStations)
+        station_recyclerview.adapter =
+            StationFavAdapter(favStations)
 
     }
 }

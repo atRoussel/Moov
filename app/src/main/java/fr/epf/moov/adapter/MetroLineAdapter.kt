@@ -1,17 +1,16 @@
-package fr.epf.moov
+package fr.epf.moov.adapter
 
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import fr.epf.moov.DetailLineActivity
+import fr.epf.moov.R
 import fr.epf.moov.model.MetroLine
 import fr.epf.moov.model.Traffic
-import kotlinx.android.synthetic.main.activity_horaires.*
 import kotlinx.android.synthetic.main.metroline_view.view.*
 
 class MetroLineAdapter(val metroLines: List<MetroLine>) : RecyclerView.Adapter<MetroLineAdapter.MetroLineViewHolder>() {

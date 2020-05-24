@@ -1,9 +1,10 @@
-package fr.epf.moov
+package fr.epf.moov.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import fr.epf.moov.R
 import kotlinx.android.synthetic.main.schedule_view.view.*
 
 class ScheduleAdapter (val schedules : MutableList<String>?) : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>(){

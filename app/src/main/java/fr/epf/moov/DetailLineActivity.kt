@@ -1,15 +1,13 @@
 package fr.epf.moov
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import fr.epf.moov.adapter.StationAdapter
 import fr.epf.moov.model.Station
-import fr.epf.moov.model.Traffic
 import kotlinx.android.synthetic.main.activity_detail_line.*
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.metroline_view.*
 import kotlinx.coroutines.runBlocking
 
 class DetailLineActivity: AppCompatActivity() {
@@ -50,7 +48,8 @@ class DetailLineActivity: AppCompatActivity() {
         station_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        station_recyclerview.adapter = StationAdapter(ListStations)
+        station_recyclerview.adapter =
+            StationAdapter(ListStations)
 
     }
 }

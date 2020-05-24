@@ -1,12 +1,13 @@
-package fr.epf.moov
+package fr.epf.moov.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import fr.epf.moov.DetailStationActivity
+import fr.epf.moov.R
 import fr.epf.moov.model.Station
-import kotlinx.android.synthetic.main.activity_horaires.view.*
 import kotlinx.android.synthetic.main.station_view.view.*
 
 class StationAdapter(val stations: List<Station>?) : RecyclerView.Adapter<StationAdapter.StationViewHolder>(){

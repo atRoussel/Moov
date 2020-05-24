@@ -1,4 +1,4 @@
-package fr.epf.moov
+package fr.epf.moov.adapter
 
 import android.content.Context
 import android.content.res.Resources
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import fr.epf.moov.R
 import fr.epf.moov.model.Station
 
 class StationArrayAdapter (context : Context, ressourceId : Int, var stationList : List<Station>) : ArrayAdapter<Station>(context, ressourceId, stationList) {

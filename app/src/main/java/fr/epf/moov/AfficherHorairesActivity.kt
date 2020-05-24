@@ -2,22 +2,26 @@ package fr.epf.moov
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import fr.epf.moov.adapter.ScheduleAdapter
+import fr.epf.moov.adapter.StationChoiceAdapter
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.activity_horaires.*
-import kotlinx.android.synthetic.main.choice_popup.*
+import kotlinx.android.synthetic.main.activity_horaires.aller_textview
+import kotlinx.android.synthetic.main.activity_horaires.global_schedule_layout
+import kotlinx.android.synthetic.main.activity_horaires.pictogram_imageview
+import kotlinx.android.synthetic.main.activity_horaires.retour_textview
+import kotlinx.android.synthetic.main.activity_horaires.schedules_recyclerview
+import kotlinx.android.synthetic.main.activity_horaires.station_name_textview
+import kotlinx.android.synthetic.main.activity_schedules_qrcode.*
 import kotlinx.coroutines.runBlocking
 
 class AfficherHorairesActivity : AppCompatActivity(){
@@ -36,7 +40,7 @@ class AfficherHorairesActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_horaires)
+        setContentView(R.layout.activity_schedules_qrcode)
 
         val database =
             Room.databaseBuilder(this, AppDatabase::class.java, "listStations")
@@ -48,12 +52,18 @@ class AfficherHorairesActivity : AppCompatActivity(){
 
         schedules_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        station_choice_recyclerview.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+
+
+
+
+
 
         runBlocking {
             allStations = stationDao?.getStations()
         }
-
-
         var slug = ""
         var type = ""
         var code = ""
@@ -86,14 +96,30 @@ class AfficherHorairesActivity : AppCompatActivity(){
             }
         }
 
+        station_choice_recyclerview.adapter =
+            StationChoiceAdapter(listStations) { station: Station ->
+                stationClicked(station)
+            }
 
-     /*   if (listStations.size>1){
-            showPopUp()
-        } */
 
 
+
+    }
+
+    fun getListDestinations(destinations: String?): List<String>? {
+        if (destinations != null) {
+            return destinations.split(" / ")
+        }
+        return null
+    }
+
+
+
+    private fun stationClicked(station : Station){
+        Toast.makeText(this, "Clicked: ${station.codeLine}", Toast.LENGTH_SHORT).show()
+        val stationclicked : Station = station
         runBlocking {
-            val result = service.getSchedules(type, code, slug, "A")
+            val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, "A")
             schedulesList.clear()
 
 
@@ -104,14 +130,15 @@ class AfficherHorairesActivity : AppCompatActivity(){
             }
         }
 
-        schedules_recyclerview.adapter = ScheduleAdapter(schedulesList)
+        schedules_recyclerview.adapter =
+            ScheduleAdapter(schedulesList)
 
         station_name_textview.text = nameStation
         aller_textview.text = listDestinations?.get(0)
         retour_textview.text = listDestinations?.get(1)
 
 
-        val drawableName: String = "m${code}"
+        val drawableName: String = "m${stationclicked.codeLine}"
 
         var resources: Resources = this.resources
         val id: Int =
@@ -119,35 +146,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
         pictogram_imageview.setImageResource(id)
 
         global_schedule_layout.visibility = View.VISIBLE
-    }
-
-    fun getListDestinations(destinations: String?): List<String>? {
-        if (destinations != null) {
-            return destinations.split(" / ")
-        }
-        return null
-    }
-
-    fun showPopUp(){
-        //Ouverture de la pop-up
-
-
-        val popup = AlertDialog.Builder(this)
-        choice_popup_recyclerview.layoutManager =
-            LinearLayoutManager(popup.context, LinearLayoutManager.VERTICAL, false)
-        popup.setTitle("Choisissez votre station")
-        val view = layoutInflater.inflate(R.layout.choice_popup, null)
-        val okbutton = view.findViewById<Button>(R.id.ok_button_popup)
-
-        popup.setView(view)
-       // choice_popup_recyclerview.adapter = PopUpAdapter(listStations, this)
-
-        val alert = popup.show()
-
-        okbutton.setOnClickListener {
-
-        }
-
 
     }
 
