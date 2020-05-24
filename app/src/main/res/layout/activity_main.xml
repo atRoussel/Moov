@@ -8,14 +8,43 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/horaires_button"
-        android:layout_width="250dp"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="150dp"
-        android:text="Horaires" />
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="top|end"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:src="@drawable/schedule"
+            android:tint="@color/white"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:id="@+id/schedule_button_main"
+            app:fabSize="normal"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="top|right"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:src="@drawable/qr_code"
+            android:backgroundTint="@color/white"
+            android:id="@+id/qrcode_button_main"
+            app:fabSize="normal"/>
+    </LinearLayout>
+
+
 
     <Button
         android:id="@+id/lists_button"
@@ -23,17 +52,10 @@
         android:layout_height="wrap_content"
         android:text="Listes des métros/stations"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/QRCode_button"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:text="Scanner un QR Code"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"/>
+
 
     <Button
         android:id="@+id/favoris_button"

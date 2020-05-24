@@ -22,6 +22,7 @@
         <activity android:name=".DetailLineActivity" android:label="Details de la ligne"></activity>
         <activity android:name=".AfficherHorairesActivity" android:label="Horaires2"></activity>
         <activity android:name=".DetailStationActivity" android:label="Details de la station"></activity>
+        <activity android:name=".ScheduleActivity" android:label="Horaires3"></activity>
         <activity android:name=".SplashActivity">
 
 

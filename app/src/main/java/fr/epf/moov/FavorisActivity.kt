@@ -1,6 +1,7 @@
 package fr.epf.moov
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -35,6 +36,10 @@ class FavorisActivity : AppCompatActivity() {
 
         station_recyclerview.adapter =
             StationFavAdapter(favStations)
+
+        if(favStations.isNullOrEmpty()){
+            empty_favoris_image.visibility = View.VISIBLE
+        }
 
     }
 }

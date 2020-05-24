@@ -2,58 +2,61 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
-    android:layout_margin="8dp"
+    android:layout_margin="1dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:elevation="0dp"
+    android:layout_height="60dp">
 
     <LinearLayout
-        android:layout_width="384dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_gravity="center"
             android:id="@+id/metroLine_imageview"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="10dp" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"/>
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_marginTop="3dp"
+            android:layout_gravity="center"
             android:layout_width="278dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/metroLine_directionsA_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="5dp"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 tools:text="DirectionA" />
 
             <TextView
                 android:id="@+id/metroLine_directionsR_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
+                android:gravity="top"
                 android:layout_marginLeft="8dp"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 tools:text="DirectionR" />
 
         </LinearLayout>
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/warning_imageview"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="8dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="60dp"
+            android:src="@drawable/attention2"
+            android:tint="@color/colorAccent"
+            android:layout_marginTop="5dp" />
 
 
     </LinearLayout>

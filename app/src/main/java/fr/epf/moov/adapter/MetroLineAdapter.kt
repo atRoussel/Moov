@@ -38,8 +38,8 @@ class MetroLineAdapter(val metroLines: List<MetroLine>) : RecyclerView.Adapter<M
         holder.metroLineView.metroLine_imageview.setImageResource(id)
 
         if(Traffic.all[position].slug == "normal") {
-            holder.metroLineView.warning_imageview.setImageResource(R.drawable.empty)
-        } else holder.metroLineView.warning_imageview.setImageResource(R.drawable.attention)
+            holder.metroLineView.warning_imageview.visibility=View.GONE
+        }
 
         val directions_line = metro.directions.split(" / ")
 

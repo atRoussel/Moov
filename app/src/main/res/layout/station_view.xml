@@ -2,18 +2,19 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="8dp"
+    android:layout_margin="3dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         >
 
         <TextView
-            android:layout_marginLeft="8dp"
-            android:textSize="19dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="17dp"
             android:gravity="center"
             tools:text="Station"
             android:id="@+id/station_name_text"
@@ -29,9 +30,10 @@
 
         <ImageView
             android:layout_marginRight="10dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
             android:layout_gravity="center"
+            android:tint="@color/colorPrimaryDark"
             android:src="@drawable/right_arrow" />
 
         </LinearLayout>

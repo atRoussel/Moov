@@ -3,6 +3,8 @@ package fr.epf.moov
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.Window
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,17 +15,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        horaires_button.setOnClickListener {
-            val intent = Intent(this, RechercheHorairesActivity::class.java)
-            startActivity(intent)
-        }
 
         lists_button.setOnClickListener {
             val intent = Intent(this, ListesActivity::class.java)
             startActivity(intent)
         }
 
-        QRCode_button.setOnClickListener {
+        qrcode_button_main.setOnClickListener {
             val intent = Intent(this, QRCodeActivity::class.java)
             startActivity(intent)
         }
@@ -32,5 +30,18 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FavorisActivity::class.java)
             startActivity(intent)
         }
+
+        schedule_button_main.setOnClickListener {
+            val intent = Intent(this, ScheduleActivity::class.java)
+            startActivity(intent)
+        }
+
+
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        return true
     }
 }
