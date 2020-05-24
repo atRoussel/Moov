@@ -27,6 +27,15 @@ interface RATPService {
     suspend fun getStation( @Path("type") type : String,
                             @Path("code") code : String
     ) : LineModel.Welcome
+
+    @GET("v4/traffic/{type}")
+    suspend fun getTraffic( @Path("type") type : String
+    ) : TrafficModel.Welcome
+
+    @GET("v4/traffic/{type}/{code}")
+    suspend fun getTrafficLine( @Path("type") type : String,
+                            @Path("code") code : String
+    ) : TrafficLineModel.Welcome
 }
 
 
