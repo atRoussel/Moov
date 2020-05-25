@@ -20,6 +20,7 @@ class FavorisActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favoris)
+        layout_empty_favoris.visibility = View.GONE
 
         station_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -38,7 +39,9 @@ class FavorisActivity : AppCompatActivity() {
             StationFavAdapter(favStations)
 
         if(favStations.isNullOrEmpty()){
-            empty_favoris_image.visibility = View.VISIBLE
+            layout_empty_favoris.visibility = View.VISIBLE
+        } else{
+            station_recyclerview.visibility = View.VISIBLE
         }
 
     }
