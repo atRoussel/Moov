@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_favoris"
+            android:icon="@drawable/fav_full"
+            android:iconTint="@color/colorPrimaryDark"
+            android:title="Stations favorites"/>
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/address"
+            android:iconTint="@color/colorPrimaryDark"
+            android:title="Cartes"/>
+        <item
+            android:id="@+id/nav_lists"
+            android:icon="@drawable/train"
+            android:iconTint="@color/colorPrimaryDark"
+            android:title="Listes des lignes"/>
+    </group>
+
+
+   <!-- <item android:title="Account Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_update"
+                android:title="Update Profile"/>
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Sign Out"/>
+        </menu>
+    </item>-->
+</menu>
