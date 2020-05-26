@@ -35,7 +35,7 @@
             android:label="Horaires2" />
         <activity
             android:name=".DetailStationActivity"
-            android:label="Details de la station" />
+            android:label="Détails de la station" />
         <activity
             android:name=".ScheduleActivity"
             android:label="Horaires3" />
