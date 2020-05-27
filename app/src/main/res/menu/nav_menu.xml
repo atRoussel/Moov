@@ -2,13 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group>
+
+        <item
+            android:id="@+id/nav_home"
+            android:title="Accueil"/>
         <item
             android:id="@+id/nav_favoris"
             android:icon="@drawable/fav_full"
             android:iconTint="@color/colorPrimaryDark"
             android:title="Stations favorites"/>
         <item
-            android:id="@+id/nav_messages"
+            android:id="@+id/nav_maps"
             android:icon="@drawable/address"
             android:iconTint="@color/colorPrimaryDark"
             android:title="Cartes"/>

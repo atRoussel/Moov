@@ -69,12 +69,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_home -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
             R.id.nav_favoris -> {
                 val intent = Intent(this, FavorisActivity::class.java)
                 startActivity(intent)
             }
-            R.id.nav_messages -> {
-                Toast.makeText(this, "Messages clicked", Toast.LENGTH_SHORT).show()
+            R.id.nav_maps -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_lists -> {
                 val intent = Intent(this, ListesActivity::class.java)
