@@ -65,7 +65,7 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
         val station = stations?.get(position)
         way = ""
         scheduleVisible = false
-        stringDestinations!!.clear()
+        stringDestinations?.clear()
         stringDestinations = getListDestinations(station?.directionLine)
 
         val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -154,17 +154,15 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 }
             }
             holder.stationFavView.setOnClickListener {
-if(scheduleVisible == true){
-    holder.stationFavView.schedules_recyclerview.visibility = View.GONE
-    holder.stationFavView.destinations_exchange.visibility = View.INVISIBLE
-    scheduleVisible = false
-    }else{
-    holder.stationFavView.schedules_recyclerview.visibility = View.VISIBLE
-    holder.stationFavView.destinations_exchange.visibility = View.VISIBLE
-    scheduleVisible = true
-}
-
-
+            if(scheduleVisible == true){
+                holder.stationFavView.schedules_recyclerview.visibility = View.GONE
+                holder.stationFavView.destinations_exchange.visibility = View.INVISIBLE
+                scheduleVisible = false
+                }else{
+                holder.stationFavView.schedules_recyclerview.visibility = View.VISIBLE
+                holder.stationFavView.destinations_exchange.visibility = View.VISIBLE
+                scheduleVisible = true
+            }
 
 
             }

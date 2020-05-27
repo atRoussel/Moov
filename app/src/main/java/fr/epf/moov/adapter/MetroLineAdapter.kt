@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.epf.moov.DetailLineActivity
+import fr.epf.moov.DetailStationActivity
 import fr.epf.moov.R
 import fr.epf.moov.model.MetroLine
 import fr.epf.moov.model.Traffic
