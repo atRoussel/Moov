@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -19,7 +20,7 @@ import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.activity_horaires.*
+import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.coroutines.runBlocking
 
 class ScheduleActivity : AppCompatActivity() {
@@ -33,7 +34,7 @@ class ScheduleActivity : AppCompatActivity() {
     private var savedStationDao: StationDao? = null
     val service = retrofit().create(RATPService::class.java)
     var listDestinations: List<String>? = null
-    var stringDestinations:String = ""
+    var stringDestinations:String? = null
     var way: String = "A"
     var url: String? = null
 
@@ -57,7 +58,7 @@ class ScheduleActivity : AppCompatActivity() {
         runBlocking {
             allStations = stationDao?.getStations()
             allStations?.map {
-                allStationsName.add("${it.nameStation} ( Métro ${it.codeLine} )")
+                allStationsName.add("${it.nameStation} (Métro ${it.codeLine})")
             }
         }
         //Récupération des stations favoris
@@ -67,63 +68,76 @@ class ScheduleActivity : AppCompatActivity() {
         val adapter: ArrayAdapter<String> =
             ArrayAdapter(this, android.R.layout.simple_list_item_1, allStationsName)
         autoComplete_stations.setAdapter(adapter)
-        schedules_button.setOnClickListener {
+
+        schedule_button.setOnClickListener {
             hideKeyboard()
+            stringDestinations = null
             val autoComplete_text = autoComplete_stations.text.toString()
-            val stationName = autoComplete_text.substringBefore(" (")
-            val codeLine = autoComplete_text.substringAfter("( Métro ").substringBefore(" )")
-            var slug = ""
-            var type = ""
-            var code = ""
-            var favoris = false
-            allStations?.forEach {
-                if (it.nameStation == stationName && it.codeLine == codeLine) {
-                    slug = it.slugStation
-                    type = it.typeLine
-                    code = it.codeLine
-                    favoris = getFavoris(stationName, code)
-                    runBlocking {
-                        val result = service.getStation(type, code)
-                        stringDestinations = result.result.directions
-                        listDestinations = getListDestinations(stringDestinations)
+
+            if (autoComplete_text.isNullOrEmpty()) {
+                Toast.makeText(this, "Veuillez entrez un nom de station", Toast.LENGTH_SHORT).show()
+            } else {
+
+                val stationName = autoComplete_text.substringBefore(" (Métro")
+                val codeLine = autoComplete_text.substringAfter("(Métro ").substringBefore(")")
+                var slug = ""
+                var type = ""
+                var code = ""
+                var favoris = false
+                var verification = false
+                allStations?.forEach {
+
+                    if (it.nameStation == stationName && it.codeLine == codeLine) {
+                        verification = true
+                        slug = it.slugStation
+                        type = it.typeLine
+                        code = it.codeLine
+                        favoris = getFavoris(stationName, code)
+                        runBlocking {
+                            val result = service.getStation(type, code)
+                            stringDestinations = result.result.directions
+                            listDestinations = getListDestinations(stringDestinations)
+                        }
                     }
                 }
-            }
-            station = Station(
-                0,
-                type,
-                code,
-                stationName,
-                slug,
-                stringDestinations,
-                favoris
-            )
-            runBlocking {
-                val result = service.getSchedules(type, code, slug, way)
-                schedulesList.clear()
-                result.result.schedules.map {
-                    var schedule = it.message
-                    schedulesList.add(schedule)
+                if(!verification){
+                    Toast.makeText(this, "Veuillez entrez un nom de station valide", Toast.LENGTH_SHORT).show()
+                }else {
+                    station = Station(
+                        0,
+                        type,
+                        code,
+                        stationName,
+                        slug,
+                        stringDestinations,
+                        favoris
+                    )
+                    runBlocking {
+                        val result = service.getSchedules(type, code, slug, way)
+                        schedulesList.clear()
+                        result.result.schedules.map {
+                            var schedule = it.message
+                            schedulesList.add(schedule)
 
-                }
-            }
-            Log.d("OU", schedulesList.toString())
+                        }
+                    }
+                    Log.d("OU", schedulesList.toString())
 
 
-            schedules_recyclerview.adapter =
-                ScheduleAdapter(schedulesList)
+                    schedules_recyclerview.adapter =
+                        ScheduleAdapter(schedulesList)
 
-            station_name_textview.text = stationName
-            aller_textview.text = listDestinations?.get(0)
-            retour_textview.text = listDestinations?.get(1)
-            val cityCsv = resources.openRawResource(R.raw.pictogrammes)
-            val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
-            val drawableName: String = "m${code}"
-            var resources: Resources = this.resources
-            val id: Int =
-                resources.getIdentifier(drawableName, "drawable", this.packageName)
-            pictogram_imageview.setImageResource(id)
-            /* listPictogrammes.map {
+                    station_name_textview.text = stationName
+                    aller_textview.text = listDestinations?.get(0)
+                    retour_textview.text = listDestinations?.get(1)
+                    val cityCsv = resources.openRawResource(R.raw.pictogrammes)
+                    val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
+                    val drawableName: String = "m${code}"
+                    var resources: Resources = this.resources
+                    val id: Int =
+                        resources.getIdentifier(drawableName, "drawable", this.packageName)
+                    pictogram_imageview.setImageResource(id)
+                    /* listPictogrammes.map {
                    var listp = getListPictogramme(it.toString())
                    if (listp[1] == "M${code}") {
                        url = listp[0]
@@ -132,62 +146,86 @@ class ScheduleActivity : AppCompatActivity() {
                val policy =
                    StrictMode.ThreadPolicy.Builder().permitAll().build()
                StrictMode.setThreadPolicy(policy)*/
-            /* val imageview: ImageView = findViewById(R.id.pictogram_imageview)
+                    /* val imageview: ImageView = findViewById(R.id.pictogram_imageview)
               fetchSvg(this, url!!, pictogram_imageview)*/
-            /*Glide.with(this)
+                    /*Glide.with(this)
                     .load(url)
                     .centerCrop()
                     .into(pictogram_imageview)*/
-            if(station.favoris==true)
-                fav_imageview.setImageResource(R.drawable.fav_full)
-            global_schedule_layout.visibility = View.VISIBLE
-            fav_imageview.setOnClickListener {
-                if (station.favoris == true) {
-                    station.favoris = false
-                    fav_imageview.setImageResource(R.drawable.fav_empty)
-                    runBlocking {
-                        savedStationDao?.deleteStation(station.id)
-                    }
-                    Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
-                } else if (station.favoris == false) {
-                    station.favoris = true
-                    fav_imageview.setImageResource(R.drawable.fav_full)
-                    runBlocking {
-                        savedStationDao?.addStation(station)
-                    }
-                    Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT).show()
-                }
-            }
-            destinations_exchange.setOnClickListener {
-                if (way == "A") {
-                    way = "R"
-                    runBlocking {
-                        val result = service.getSchedules(type, code, slug, way)
-                        schedulesList.clear()
-                        result.result.schedules.map {
-                            var schedule = it.message
-                            schedulesList.add(schedule)
+                    if (station.favoris == true)
+                        fav_imageview.setImageResource(R.drawable.fav_full)
+                    global_schedule_layout.visibility = View.VISIBLE
+                    fav_imageview.setOnClickListener {
+                        if (station.favoris == true) {
+                            station.favoris = false
+                            fav_imageview.setImageResource(R.drawable.fav_empty)
+                            runBlocking {
+                                savedStationDao?.deleteStation(station.id)
+                            }
+                            Toast.makeText(
+                                this,
+                                "La station a été supprimée des favoris",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else if (station.favoris == false) {
+                            station.favoris = true
+                            fav_imageview.setImageResource(R.drawable.fav_full)
+                            runBlocking {
+                                savedStationDao?.addStation(station)
+                            }
+                            Toast.makeText(
+                                this,
+                                "La station a été ajoutée aux favoris",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
-                    schedules_recyclerview.adapter =
-                        ScheduleAdapter(schedulesList)
-                    aller_textview.text = listDestinations?.get(1)
-                    retour_textview.text = listDestinations?.get(0)
-                } else if (way == "R") {
-                    way = "A"
-                    runBlocking {
-                        val result = service.getSchedules(type, code, slug, way)
-                        schedulesList.clear()
-                        result.result.schedules.map {
-                            var schedule = it.message
-                            schedulesList.add(schedule)
-                        }
-                    }
-                    schedules_recyclerview.adapter =
-                        ScheduleAdapter(schedulesList)
-                    aller_textview.text = listDestinations?.get(0)
-                    retour_textview.text = listDestinations?.get(1)
                 }
+
+                destinations_exchange.setOnClickListener {
+                    if (way == "A") {
+                        way = "R"
+                        runBlocking {
+                            val result = service.getSchedules(type, code, slug, way)
+                            schedulesList.clear()
+                            result.result.schedules.map {
+                                var schedule = it.message
+                                schedulesList.add(schedule)
+                            }
+                        }
+                        schedules_recyclerview.adapter =
+                            ScheduleAdapter(schedulesList)
+                        aller_textview.text = listDestinations?.get(1)
+                        retour_textview.text = listDestinations?.get(0)
+                    } else if (way == "R") {
+
+                        way = "A"
+                        runBlocking {
+                            val result = service.getSchedules(type, code, slug, way)
+                            schedulesList.clear()
+                            result.result.schedules.map {
+                                var schedule = it.message
+                                schedulesList.add(schedule)
+                            }
+                        }
+                        schedules_recyclerview.adapter =
+                            ScheduleAdapter(schedulesList)
+                        aller_textview.text = listDestinations?.get(0)
+                        retour_textview.text = listDestinations?.get(1)
+                    }
+                }
+
+/*destinations_exchange.setOnTouchListener { v, event ->
+    if (event.action == MotionEvent.ACTION_DOWN){
+        v.elevation = 0F
+        return@setOnTouchListener true
+    }else if (event.action != MotionEvent.ACTION_DOWN){
+        v.elevation = 10F
+        return@setOnTouchListener true
+    }
+
+    return@setOnTouchListener false
+}*/
             }
         }
     }

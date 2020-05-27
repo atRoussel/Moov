@@ -97,7 +97,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
                     stringDestinations,
                     favoris
                 )
-                Log.d("PBDEST", station.directionLine)
                 listStations.add(station)
 
             }
@@ -107,6 +106,10 @@ class AfficherHorairesActivity : AppCompatActivity(){
             StationChoiceAdapter(listStations) { station: Station ->
                 stationClicked(station)
             }
+
+     /*   if (listStations.size == 1){
+            choice_station_layout.visibility = View.GONE
+        }*/
 
 
 
