@@ -35,6 +35,8 @@ class AfficherHorairesActivity : AppCompatActivity(){
     private lateinit var station: Station
     var schedulesList: MutableList<String> = mutableListOf()
     var listStations : MutableList<Station> = mutableListOf()
+    private var savedStationDao: StationDao? = null
+    var way: String = "A"
 
 
 
@@ -46,6 +48,11 @@ class AfficherHorairesActivity : AppCompatActivity(){
             Room.databaseBuilder(this, AppDatabase::class.java, "listStations")
                 .build()
         stationDao = database.getStationDao()
+
+        val databasesaved =
+            Room.databaseBuilder(this, AppDatabase::class.java, "savedStations")
+                .build()
+        savedStationDao = databasesaved.getStationDao()
 
         nameStation = intent.getStringExtra("station")
         Log.d("station",nameStation)
@@ -79,7 +86,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
                 runBlocking {
                     val result = service.getStation(type, code)
                     stringDestinations = result.result.directions
-                    listDestinations = getListDestinations(stringDestinations)
                 }
 
                 station = Station(
@@ -91,6 +97,7 @@ class AfficherHorairesActivity : AppCompatActivity(){
                     stringDestinations,
                     favoris
                 )
+                Log.d("PBDEST", station.directionLine)
                 listStations.add(station)
 
             }
@@ -118,8 +125,9 @@ class AfficherHorairesActivity : AppCompatActivity(){
     private fun stationClicked(station : Station){
         Toast.makeText(this, "Clicked: ${station.codeLine}", Toast.LENGTH_SHORT).show()
         val stationclicked : Station = station
+        Log.d("PBDEST", stationclicked.directionLine)
         runBlocking {
-            val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, "A")
+            val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
             schedulesList.clear()
 
 
@@ -133,7 +141,9 @@ class AfficherHorairesActivity : AppCompatActivity(){
         schedules_recyclerview.adapter =
             ScheduleAdapter(schedulesList)
 
-        station_name_textview.text = nameStation
+        listDestinations = getListDestinations(stationclicked.directionLine)
+
+        station_name_textview.text = stationclicked.nameStation
         aller_textview.text = listDestinations?.get(0)
         retour_textview.text = listDestinations?.get(1)
 
@@ -145,9 +155,63 @@ class AfficherHorairesActivity : AppCompatActivity(){
             resources.getIdentifier(drawableName, "drawable", this.packageName)
         pictogram_imageview.setImageResource(id)
 
+
+        if(station.favoris==true)
+            fav_imageview.setImageResource(R.drawable.fav_full)
         global_schedule_layout.visibility = View.VISIBLE
+
+
+        fav_imageview.setOnClickListener {
+            if (station.favoris == true) {
+                station.favoris = false
+                fav_imageview.setImageResource(R.drawable.fav_empty)
+                runBlocking {
+                    savedStationDao?.deleteStation(station.id)
+                }
+                Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
+            } else if (station.favoris == false) {
+                station.favoris = true
+                fav_imageview.setImageResource(R.drawable.fav_full)
+                runBlocking {
+                    savedStationDao?.addStation(station)
+                }
+                Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        destinations_exchange.setOnClickListener {
+            if (way == "A") {
+                way = "R"
+                runBlocking {
+                    val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
+                    schedulesList.clear()
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+                    }
+                }
+                schedules_recyclerview.adapter =
+                    ScheduleAdapter(schedulesList)
+                aller_textview.text = listDestinations?.get(1)
+                retour_textview.text = listDestinations?.get(0)
+            } else if (way == "R") {
+                way = "A"
+                runBlocking {
+                    val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
+                    schedulesList.clear()
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+                    }
+                }
+                schedules_recyclerview.adapter =
+                    ScheduleAdapter(schedulesList)
+                aller_textview.text = listDestinations?.get(0)
+                retour_textview.text = listDestinations?.get(1)
+            }
+        }
+    }
 
     }
 
 
-}

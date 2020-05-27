@@ -34,7 +34,7 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (checkPermission()){
 
-                Toast.makeText(this,"Permission valide", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"Permission validée", Toast.LENGTH_LONG).show()
             }
             else{
                 requestPermission()
@@ -113,7 +113,7 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
         nameStation = rawResult?.text
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Scan Result")
+        builder.setTitle("Résultat")
         builder.setPositiveButton("Recommencer") { _, _ ->
                 scannerView!!.resumeCameraPreview(this)
             }
@@ -126,7 +126,7 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
 
         }
 
-        builder.setMessage(" Station : ${nameStation}")
+        builder.setMessage(" Station trouvée : ${nameStation}")
         val alert: AlertDialog = builder.create()
         alert.show()
 
