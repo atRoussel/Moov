@@ -16,31 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
          <activity
-            android:name=".FavorisActivity"
-            android:label="Favoris" />
+            android:name=".FavorisActivity" />
         <activity
-            android:name=".RechercheHorairesActivity"
-            android:label="Horaires" />
+            android:name=".RechercheHorairesActivity" />
         <activity
-            android:name=".ListesActivity"
-            android:label="Liste des métros" />
-        <activity android:name=".MapsActivity"
-            android:label="Carts"/>
+            android:name=".ListesActivity" />
+        <activity android:name=".MapsActivity" />
+        <activity android:name=".ImageActivity" />
         <activity
-            android:name=".QRCodeActivity"
-            android:label="QR Code" />
+            android:name=".QRCodeActivity"/>
         <activity
-            android:name=".DetailLineActivity"
-            android:label="Details de la ligne" />
+            android:name=".DetailLineActivity" />
         <activity
-            android:name=".AfficherHorairesActivity"
-            android:label="Horaires2" />
+            android:name=".AfficherHorairesActivity" />
         <activity
-            android:name=".DetailStationActivity"
-            android:label="Détails de la station" />
+            android:name=".DetailStationActivity" />
         <activity
-            android:name=".ScheduleActivity"
-            android:label="Horaires3" />
+            android:name=".ScheduleActivity" />
         <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,56 +7,102 @@
     android:orientation="vertical"
     tools:context=".DetailLineActivity">
 
+
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/metro"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/pictogram_imageview"
+            android:src="@drawable/m1"/>
 
-            <ImageView
-                android:layout_gravity="center"
-                android:backgroundTint="@color/white"
-                android:id="@+id/logo_line_imageview"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+    </LinearLayout>
 
-            <TextView
-                android:gravity="center"
-                android:layout_width="300dp"
-                android:height="40dp"
-                android:text="Informations traffic"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:id="@+id/directions_textview"
+        android:text="Chateau de Vincennes / La Defense"
+        android:gravity="center"/>
 
-            <ImageView
-                android:id="@+id/logo_warning_imageview"
-                android:layout_width="25dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/white"
-                android:paddingRight="5dp" />
-
-        </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/trafic_card"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="#34FFBA52"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/logo_line_imageview"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white" />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Attention"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/logo_warning_imageview"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/attention"
+
+                    android:backgroundTint="@color/white"
+                    android:paddingRight="5dp" />
+                <!--android:tint="#f58300" ou #808000-->
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/message_textview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:layout_margin="10dp"/>
         </LinearLayout>
 
 
-    </LinearLayout>
+
+
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/station_recyclerview"

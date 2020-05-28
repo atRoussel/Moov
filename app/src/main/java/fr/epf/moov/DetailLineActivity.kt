@@ -1,6 +1,8 @@
 package fr.epf.moov
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.epf.moov.adapter.StationAdapter
@@ -20,11 +22,18 @@ class DetailLineActivity: AppCompatActivity() {
         val code = intent.getStringExtra("code")
         val service = retrofit().create(RATPService::class.java)
 
+        val drawableName: String = "m${code}"
+
+        var resources: Resources = this.resources
+        val id: Int =
+            resources.getIdentifier(drawableName, "drawable", this.packageName)
+        pictogram_imageview.setImageResource(id)
+
         runBlocking {
             val result = service.getTrafficLine("metros", code)
             message_textview.text = result.result.message
             if(result.result.slug == "normal") {
-                logo_warning_imageview.setImageResource(R.drawable.empty)
+                trafic_card.visibility = View.GONE
             } else logo_warning_imageview.setImageResource(R.drawable.attention)
         }
 

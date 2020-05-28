@@ -20,6 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -37,6 +38,9 @@
         android:layout_height="100dp"
         android:gravity="end"
         android:orientation="horizontal">
+
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -69,8 +73,52 @@
             android:id="@+id/qrcode_button_main"
             app:fabSize="normal"/>
     </LinearLayout>
-    
-    
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:rowCount="2"
+        android:columnCount="2">
+
+        <Button
+
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_margin="20dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#77dbf5"/>
+        <Button
+
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_margin="20dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#ffdd1a"/>
+
+        <ImageButton
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_margin="20dp"
+            android:background="@drawable/round_button"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:backgroundTint="#a9ef3e"/>
+        <Button
+
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_margin="20dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/colorAccent"/>
+
+    </GridLayout>
+
+
+
+
+
     <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="300dp"
@@ -90,40 +138,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/astuce_main_textview"
         android:text="ASTUCE"
         android:textSize="20dp"
         android:gravity="center"/>
 </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/trafic_layout"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:cardCornerRadius="20dp">
-
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/attention2"
-            android:tint="@color/colorAccent"
-            android:layout_gravity="right"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TRAFIC"
-            android:textSize="20dp"
-            android:gravity="center"/>
-    </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-</LinearLayout>
+   </LinearLayout>

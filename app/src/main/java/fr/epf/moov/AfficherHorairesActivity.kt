@@ -128,7 +128,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
     private fun stationClicked(station : Station){
         Toast.makeText(this, "Clicked: ${station.codeLine}", Toast.LENGTH_SHORT).show()
         val stationclicked : Station = station
-        Log.d("PBDEST", stationclicked.directionLine)
         runBlocking {
             val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
             schedulesList.clear()
