@@ -2,6 +2,7 @@ package fr.epf.moov.adapter
 
 import android.content.Context
 import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,6 +104,7 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
        holder.stationFavView.schedules_recyclerview.visibility = View.GONE
 
         runBlocking {
+            schedulesList.clear()
             way = "A"
             val result = service.create(RATPService::class.java).getSchedules(
                 station!!.typeLine,
@@ -159,6 +161,17 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 holder.stationFavView.destinations_exchange.visibility = View.INVISIBLE
                 scheduleVisible = false
                 }else{
+                runBlocking {
+                    val result =  service.create(RATPService::class.java).getSchedules(station!!.typeLine, station.codeLine, station.slugStation, way)
+
+                    schedulesList.clear()
+
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+
+                    }
+                }
                 holder.stationFavView.schedules_recyclerview.visibility = View.VISIBLE
                 holder.stationFavView.destinations_exchange.visibility = View.VISIBLE
                 scheduleVisible = true
