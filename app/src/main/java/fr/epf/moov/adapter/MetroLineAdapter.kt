@@ -31,16 +31,48 @@ class MetroLineAdapter(val metroLines: List<MetroLine>) : RecyclerView.Adapter<M
 
     override fun onBindViewHolder(holder: MetroLineViewHolder, position: Int) {
         val metro = metroLines[position]
-
-        val drawableName : String = "m${metro.code}"
         var resources: Resources = context.resources
-        val id: Int =
-            resources.getIdentifier(drawableName, "drawable", context.packageName)
-        holder.metroLineView.metroLine_imageview.setImageResource(id)
 
-        if(Traffic.all[position].slug == "normal") {
-            holder.metroLineView.warning_imageview.visibility=View.GONE
+        if(metro.type == "metros") {
+            val drawableName : String = "m${metro.code}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.metroLineView.metroLine_imageview.setImageResource(id)
+
+            if(Traffic.all[position].slug == "normal") {
+                holder.metroLineView.warning_imageview.visibility=View.GONE
+            }
         }
+        if(metro.type == "rers") {
+            val newCode = metro.code.toLowerCase()
+            val drawableName : String = "m${newCode}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.metroLineView.metroLine_imageview.setImageResource(id)
+
+            Traffic.all.map{
+                if(metro.code == it.line) {
+                    if(it.slug == "normal") {
+                        holder.metroLineView.warning_imageview.visibility=View.GONE
+                    }
+                }
+            }
+        }
+        if(metro.type == "tramways") {
+            val drawableName : String = "t${metro.code}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.metroLineView.metroLine_imageview.setImageResource(id)
+
+            Traffic.all.map{
+                if(metro.code == it.line || (metro.code == "11")) {
+                    if(it.slug == "normal" || (metro.code == "11")) {
+                        holder.metroLineView.warning_imageview.visibility=View.GONE
+                    }
+                }
+            }
+        }
+
 
         val directions_line = metro.directions.split(" / ")
 

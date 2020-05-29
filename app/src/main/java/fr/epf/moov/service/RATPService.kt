@@ -43,16 +43,19 @@ interface RATPService {
 
 object ModelRatp {
     data class Welcome (
-        val result : metros,
+        val result : type,
         val _metadata : Metadata)
 
-data class metros (
-    val metros : List<Metro>?)
+    data class type (
+        val tramways : List<Metro>?,
+        val rers : List<Metro>?,
+        val metros : List<Metro>?)
 
-    data class Metro(val code : String,
-    val name : String,
-    val directions : String,
-    val id : Int)
+    data class Metro(
+        val code : String,
+        val name : String,
+        val directions : String,
+        val id : Int)
 
     data class Metadata (
         val call : String,

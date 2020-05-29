@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_lists -> {
-                val intent = Intent(this, ListesActivity::class.java)
+                val intent = Intent(this, ChooseTransportActivity::class.java)
                 startActivity(intent)
             }
            /* R.id.nav_update -> {
