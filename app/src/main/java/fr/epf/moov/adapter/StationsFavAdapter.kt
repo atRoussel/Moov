@@ -59,6 +59,8 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
 
 
 
+
+
         return StationFavViewHolder(view)
     }
 
@@ -66,6 +68,7 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
         val station = stations?.get(position)
         way = ""
         scheduleVisible = false
+        schedulesList.clear()
         stringDestinations?.clear()
         stringDestinations = getListDestinations(station?.directionLine)
 

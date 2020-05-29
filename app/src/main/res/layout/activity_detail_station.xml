@@ -92,17 +92,20 @@
                     android:text="Porte de Clignancourt"
                     tools:ignore="MissingConstraints" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="15dp"
+                <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:elevation="1dp"
+                    android:scaleType="centerCrop"
                     android:layout_marginRight="15dp"
-                    android:rotation="90"
-                    android:id="@+id/destinations_exchange"
+                    android:backgroundTint="@color/white"
                     android:src="@drawable/exchanging"
+                    android:rotation="90"
                     android:tint="@color/colorPrimaryDark"
+                    android:id="@+id/destinations_exchange"
                     app:layout_constraintRight_toRightOf="@+id/schedule_layout"
-                    app:layout_constraintTop_toTopOf="@+id/schedule_layout" />
+                    app:layout_constraintBottom_toBottomOf="@+id/schedule_layout"
+                    app:layout_constraintTop_toTopOf="@+id/schedule_layout"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
