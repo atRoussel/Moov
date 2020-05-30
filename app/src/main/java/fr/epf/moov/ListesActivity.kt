@@ -53,7 +53,9 @@ class ListesActivity : AppCompatActivity() {
             if( type == "tramways") {
                 type_image.setImageResource(R.drawable.tramway)
                 result.result.tramways?.map {
-                    MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id, type))
+                    if("${it.code}" != "11") {
+                        MetroLine.all.add(MetroLine("${it.code}", "${it.name}", "${it.directions}", it.id, type))
+                    }
                 }
                 val result_traffic = service.getTraffic("tramways")
                 result_traffic.result.tramways?.map{

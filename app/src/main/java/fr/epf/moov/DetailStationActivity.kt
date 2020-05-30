@@ -2,6 +2,7 @@ package fr.epf.moov
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ class DetailStationActivity : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         val slug = intent.getStringExtra("slug")
         val type = intent.getStringExtra("type")
+        var resources: Resources = this.resources
 
         var allStations: List<Station>? = null
         lateinit var ma_station: Station
@@ -41,11 +43,26 @@ class DetailStationActivity : AppCompatActivity() {
         var savedStationDao: StationDao? = null
         var changeDirection = false
 
-        val drawableName : String = "m${code}"
-        var resources: Resources = this.resources
-        val id: Int =
-            resources.getIdentifier(drawableName, "drawable", this.packageName)
-        pictogram_imageview.setImageResource(id)
+        if(type == "metros") {
+            val drawableName: String = "m${code}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        if(type == "rers") {
+            val newCode = code.toLowerCase()
+            val drawableName : String = "m${newCode}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        if(type == "tramways") {
+            val drawableName : String = "t${code}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        Log.d("infos", code + name + slug + type)
 
         MetroLine.all.forEach {
             if(it.code == code) {
@@ -124,6 +141,7 @@ class DetailStationActivity : AppCompatActivity() {
                 .build()
         stationDao = database.getStationDao()
 
+        /*
         //Récupération de toutes les stations
         runBlocking {
             allStations = stationDao?.getStations()
@@ -161,7 +179,7 @@ class DetailStationActivity : AppCompatActivity() {
                 }
                 Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
 
         station_name_textview.text = name
     }

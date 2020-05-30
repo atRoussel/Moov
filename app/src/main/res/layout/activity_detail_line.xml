@@ -19,6 +19,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="5dp"
+            android:id="@+id/type_imageview"
             android:src="@drawable/metro"/>
         <ImageView
             android:layout_width="40dp"

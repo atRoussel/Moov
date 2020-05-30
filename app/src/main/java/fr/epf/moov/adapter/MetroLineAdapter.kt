@@ -3,9 +3,11 @@ package fr.epf.moov.adapter
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import fr.epf.moov.DetailLineActivity
 import fr.epf.moov.DetailStationActivity
@@ -80,10 +82,16 @@ class MetroLineAdapter(val metroLines: List<MetroLine>) : RecyclerView.Adapter<M
         holder.metroLineView.metroLine_directionsR_text.text=directions_line[0]
 
         holder.metroLineView.setOnClickListener{
-            val intent = Intent(it.context, DetailLineActivity::class.java)
-            intent.putExtra("directions", metro.directions)
-            intent.putExtra("code", metro.code)
-            it.context.startActivity(intent)
+            if(metro.code == "C" || metro.code ==  "D") {
+                Toast.makeText(this.context, "Indisponible pour le moment", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(it.context, DetailLineActivity::class.java)
+                intent.putExtra("type", metro.type)
+                intent.putExtra("directions", metro.directions)
+                intent.putExtra("code", metro.code)
+                it.context.startActivity(intent)
+            }
+
         }
     }
 }

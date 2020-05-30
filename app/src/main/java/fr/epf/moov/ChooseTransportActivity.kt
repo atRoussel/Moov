@@ -9,6 +9,9 @@ class ChooseTransportActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_transport)
+        tram_button.setImageResource(R.drawable.tramway)
+        metros_button.setImageResource(R.drawable.metro)
+        rers_button.setImageResource(R.drawable.rer)
 
         metros_button.setOnClickListener{
             val intent = Intent(this, ListesActivity::class.java)
