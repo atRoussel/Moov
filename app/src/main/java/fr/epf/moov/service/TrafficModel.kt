@@ -2,11 +2,14 @@ package fr.epf.moov.service
 
 object TrafficModel {
     data class Welcome (
-        val result : metros,
+        val result : type,
         val _metadata : Metadata
     )
 
-    data class metros(val metros : List<Traffic_line>)
+    data class type(
+        val metros : List<Traffic_line>?,
+        val rers : List<Traffic_line>?,
+        val tramways : List<Traffic_line>?)
 
     data class Traffic_line (
         val line : String,

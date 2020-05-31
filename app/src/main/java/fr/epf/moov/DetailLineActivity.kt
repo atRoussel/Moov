@@ -20,17 +20,39 @@ class DetailLineActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_line)
         val code = intent.getStringExtra("code")
+        val type = intent.getStringExtra("type")
+        val directions = intent.getStringExtra("directions")
+        var resources: Resources = this.resources
         val service = retrofit().create(RATPService::class.java)
 
-        val drawableName: String = "m${code}"
+        directions_textview.text = directions
 
-        var resources: Resources = this.resources
-        val id: Int =
-            resources.getIdentifier(drawableName, "drawable", this.packageName)
-        pictogram_imageview.setImageResource(id)
+        if(type == "metros") {
+            type_imageview.setImageResource(R.drawable.metro)
+            val drawableName: String = "m${code}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        if(type == "rers") {
+            type_imageview.setImageResource(R.drawable.rer)
+            val newCode = code.toLowerCase()
+            val drawableName : String = "m${newCode}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        if(type == "tramways") {
+            type_imageview.setImageResource(R.drawable.tramway)
+            val drawableName : String = "t${code}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+
 
         runBlocking {
-            val result = service.getTrafficLine("metros", code)
+            val result = service.getTrafficLine(type, code)
             message_textview.text = result.result.message
             if(result.result.slug == "normal") {
                 trafic_card.visibility = View.GONE
@@ -39,11 +61,11 @@ class DetailLineActivity: AppCompatActivity() {
 
 
         runBlocking {
-            val result = service.listStationsMetros("metros", "${code}")
+            val result = service.listStationsMetros(type, code)
             result.result.stations?.map {
                 val station = Station(
                     0,
-                    "metros",
+                    type,
                     code,
                     it.name,
                     it.slug,
@@ -54,6 +76,7 @@ class DetailLineActivity: AppCompatActivity() {
             }
 
         }
+
         station_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 

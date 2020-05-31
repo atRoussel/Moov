@@ -31,19 +31,14 @@ class StationAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Statio
         val station = stations?.get(position)
         holder.stationView.station_name_text.text = "${station?.nameStation}"
 
-        Log.d("info", station?.typeLine)
-
-        holder.stationView.setOnClickListener{
-            val intent = Intent(it.context, DetailStationActivity::class.java)
-            intent.putExtra("type", station?.typeLine)
-            intent.putExtra("slug", station?.slugStation)
-            intent.putExtra("name", station?.nameStation)
-            intent.putExtra("code", station?.codeLine)
-            it.context.startActivity(intent)
+            holder.stationView.setOnClickListener{
+                val intent = Intent(it.context, DetailStationActivity::class.java)
+                intent.putExtra("type", station?.typeLine)
+                intent.putExtra("slug", station?.slugStation)
+                intent.putExtra("name", station?.nameStation)
+                intent.putExtra("code", station?.codeLine)
+                it.context.startActivity(intent)
+            }
         }
-
-        }
-
-
 }
 

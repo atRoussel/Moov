@@ -21,8 +21,12 @@
             android:name=".RechercheHorairesActivity" />
         <activity
             android:name=".ListesActivity" />
-        <activity android:name=".MapsActivity" />
-        <activity android:name=".ImageActivity" />
+        <activity
+            android:name=".MapsActivity" />
+        <activity
+            android:name=".ChooseTransportActivity" />
+        <activity
+            android:name=".ImageActivity" />
         <activity
             android:name=".QRCodeActivity"/>
         <activity
