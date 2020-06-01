@@ -97,6 +97,7 @@
                 android:layout_marginRight="15dp"
                 android:backgroundTint="@color/white"
                 android:src="@drawable/exchanging_normal"
+                android:visibility="invisible"
                 android:id="@+id/destinations_exchange"
                 app:layout_constraintRight_toRightOf="@+id/schedule_layout"
                 app:layout_constraintBottom_toBottomOf="@+id/schedule_layout"
@@ -108,8 +109,7 @@
         <LinearLayout
             android:id="@+id/schedules_recyclerview_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="30dp">
+            android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/schedules_recyclerview"

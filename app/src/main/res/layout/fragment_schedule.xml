@@ -49,7 +49,7 @@
         android:layout_width="375dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/global_schedule_layout"
         android:layout_marginTop="30dp">
 
