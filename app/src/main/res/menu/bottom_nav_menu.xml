@@ -6,23 +6,22 @@
         android:icon="@drawable/schedule"
         android:title="Horaires" />
     <item
-        android:id="@+id/navigation_find"
-        android:icon="@drawable/qr_code"
-        android:title="QR Code" />
-
+        android:id="@+id/navigation_profil"
+        android:icon="@drawable/train"
+        android:title="Transport" />
     <item
         android:id="@+id/navigation_trip"
         android:icon="@drawable/address"
         android:title="Cartes" />
-
+    <item
+        android:id="@+id/navigation_find"
+        android:icon="@drawable/qr_code"
+        android:title="QR Code" />
     <item
         android:id="@+id/navigation_saved"
         android:icon="@drawable/fav_full"
         android:title="Favoris" />
 
-    <item
-        android:id="@+id/navigation_profil"
-        android:icon="@drawable/train"
-        android:title="Lists" />
+
 
 </menu>
