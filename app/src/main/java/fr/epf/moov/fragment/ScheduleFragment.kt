@@ -75,7 +75,7 @@ class ScheduleFragment : Fragment(){
         runBlocking {
             allStations = stationDao?.getStations()
             allStations?.map {
-                allStationsName.add("${it.nameStation} ( Métro ${it.codeLine} )")
+                allStationsName.add("${it.nameStation} ( Ligne ${it.codeLine} )")
             }
         }
 
@@ -140,11 +140,27 @@ class ScheduleFragment : Fragment(){
             retour.text = listDestinations?.get(1)
             val cityCsv = resources.openRawResource(R.raw.pictogrammes)
             val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
-            val drawableName: String = "m${code}"
             var resources: Resources = this.resources
-            val id: Int =
-                resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
-            pictogram.setImageResource(id)
+
+            if(type == "metros") {
+                val drawableName: String = "m${code}"
+                val id: Int =
+                    resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
+                pictogram.setImageResource(id)
+            }
+            if(type == "rers") {
+                val newCode = code.toLowerCase()
+                val drawableName: String = "m${newCode}"
+                val id: Int =
+                    resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
+                pictogram.setImageResource(id)
+            }
+            if(type == "tramways") {
+                val drawableName: String = "t${code}"
+                val id: Int =
+                    resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
+                pictogram.setImageResource(id)
+            }
 
             if (station.favoris == true)
                 favoriImage.setImageResource(R.drawable.fav_full)

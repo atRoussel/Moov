@@ -95,12 +95,27 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
         holder.stationFavView.aller_textview.text = "${stringDestinations?.get(0)}"
         holder.stationFavView.retour_textview.text = "${stringDestinations?.get(1)}"
 
-        val drawableName: String = "m${station?.codeLine}"
-
         var resources: Resources = context.resources
-        val id: Int =
-            resources.getIdentifier(drawableName, "drawable", context.packageName)
-        holder.stationFavView.pictogram_imageview.setImageResource(id)
+
+        if(station?.typeLine == "metros") {
+            val drawableName: String = "m${station?.codeLine}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.stationFavView.pictogram_imageview.setImageResource(id)
+        }
+        if(station?.typeLine == "rers") {
+            val newCode = station?.codeLine.toLowerCase()
+            val drawableName: String = "m${newCode}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.stationFavView.pictogram_imageview.setImageResource(id)
+        }
+        if(station?.typeLine == "tramways") {
+            val drawableName: String = "t${station?.codeLine}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.stationFavView.pictogram_imageview.setImageResource(id)
+        }
 
         holder.stationFavView.fav_imageview.setImageResource(R.drawable.fav_full)
 

@@ -141,7 +141,7 @@ class DetailStationActivity : AppCompatActivity() {
                 .build()
         stationDao = database.getStationDao()
 
-        /*
+
         //Récupération de toutes les stations
         runBlocking {
             allStations = stationDao?.getStations()
@@ -179,7 +179,7 @@ class DetailStationActivity : AppCompatActivity() {
                 }
                 Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT).show()
             }
-        }*/
+        }
 
         station_name_textview.text = name
     }

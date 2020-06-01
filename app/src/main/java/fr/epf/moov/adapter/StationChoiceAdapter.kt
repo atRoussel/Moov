@@ -28,17 +28,28 @@ class StationChoiceAdapter(val listStations: List<Station>, val clickListener : 
     override fun onBindViewHolder(holder: PopUpViewHolder, position: Int) {
 
         val station = listStations[position]
-
-        val drawableName: String = "m${station.codeLine}"
         var resources: Resources = context.resources
-
         var view = holder.popupView
         listView.add(view)
-        val id: Int = resources.getIdentifier(drawableName, "drawable", context.packageName)
-        holder.popupView.station_choice_image.setImageResource(id)
+
+        if(station?.typeLine == "metros") {
+            val drawableName: String = "m${station?.codeLine}"
+            val id: Int = resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.popupView.station_choice_image.setImageResource(id)
+        }
+        if(station?.typeLine == "rers") {
+            val newCode = station?.codeLine.toLowerCase()
+            val drawableName: String = "m${newCode}"
+            val id: Int = resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.popupView.station_choice_image.setImageResource(id)
+        }
+        if(station?.typeLine == "tramways") {
+            val drawableName: String = "t${station?.codeLine}"
+            val id: Int = resources.getIdentifier(drawableName, "drawable", context.packageName)
+            holder.popupView.station_choice_image.setImageResource(id)
+        }
+
         (holder as PopUpViewHolder).bind(station!!,listView, clickListener)
-
-
     }
 
     class PopUpViewHolder(val popupView: View) : RecyclerView.ViewHolder(popupView) {
