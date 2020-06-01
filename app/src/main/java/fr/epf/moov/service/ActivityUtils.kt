@@ -7,6 +7,7 @@ import android.view.View.OnLongClickListener
 import android.widget.Adapter
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -52,7 +53,21 @@ fun AppCompatActivity.fetchSvg(context: Context, url : String, imageView: ImageV
             .client(client)
             .build()
     }
+fun Fragment.retrofit(): Retrofit {
+    val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+    val client = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .addNetworkInterceptor(StethoInterceptor())
+        .build()
 
+    return Retrofit.Builder()
+        .baseUrl("https://api-ratp.pierre-grimaud.fr/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(client)
+        .build()
+}
 
 fun Adapter.retrofit(): Retrofit {
     val httpLoggingInterceptor = HttpLoggingInterceptor().apply {

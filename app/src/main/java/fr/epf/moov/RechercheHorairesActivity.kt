@@ -50,6 +50,8 @@ class RechercheHorairesActivity : AppCompatActivity() {
                 Room.databaseBuilder(this, AppDatabase::class.java, "savedStations")
                     .build()
             savedStationDao = databasesaved.getStationDao()
+
+
             //Récupération de toutes les stations
             runBlocking {
                 allStations = stationDao?.getStations()

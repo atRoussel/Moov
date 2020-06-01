@@ -1,6 +1,5 @@
 package fr.epf.moov
 
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,9 +11,15 @@ import android.widget.Toast
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.content_main.*
 import okio.internal.commonAsUtf8ToByteArray
@@ -22,102 +27,40 @@ import okio.utf8Size
 import kotlin.random.Random
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     lateinit var toolbar: Toolbar
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navView: NavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        val tsvReader = csvReader{
-            delimiter = ';'
-        }
-        val astucesCsv = resources.openRawResource(R.raw.astuces)
-        val listAstuces: List<List<String>> = tsvReader.readAll(astucesCsv)
-        var idRandom : Int = Random.nextInt(listAstuces.size)+1
-
-        listAstuces.map {
-
-    if(it[0]==idRandom.toString()){
-        val charset = Charsets.UTF_8
-        val byteArray = it[1].toByteArray(charset)
-       Log.d("Astuces",byteArray.contentToString()) // [72, 101, 108, 108, 111]
-        Log.d("Astuces",byteArray.toString(charset)) // Hello
-    astuce_main_textview.text = byteArray.toString(charset)
-}
-
-        }
-
-
-        qrcode_button_main.setOnClickListener {
-            val intent = Intent(this, QRCodeActivity::class.java)
-            startActivity(intent)
-        }
-
-        
-        qrcode_button_main.setOnClickListener {
-            val intent = Intent(this, QRCodeActivity::class.java)
-            startActivity(intent)
-        }
-
-
-
-        schedule_button_main.setOnClickListener {
-            val intent = Intent(this, ScheduleActivity::class.java)
-            startActivity(intent)
-        }
-
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, 0, 0
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_find,
+                R.id.navigation_trip,
+                R.id.navigation_saved,
+                R.id.navigation_profil
+            )
         )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        navView.setNavigationItemSelectedListener(this)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
+        val switchView = intent.getIntExtra("switchView", 0)
 
-
-
-
-    }
-
-
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_favoris -> {
-                val intent = Intent(this, FavorisActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_maps -> {
-                val intent = Intent(this, MapsActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_lists -> {
-                val intent = Intent(this, ChooseTransportActivity::class.java)
-                startActivity(intent)
-            }
-           /* R.id.nav_update -> {
-                Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_logout -> {
-                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
-            }*/
+        if (switchView == 1 || switchView == 2 || switchView == 3) {
+            val bundle = bundleOf("switchView" to switchView)
+            navController.navigate(R.id.navigation_find, bundle)
         }
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
+
     }
-}
+
+    }
+
+
+
