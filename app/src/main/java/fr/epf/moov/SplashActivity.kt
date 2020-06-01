@@ -33,9 +33,9 @@ class SplashActivity  : AppCompatActivity () {
 
         runBlocking {
             stationDao?.deleteStations()
-            val result = service.listLinesMetros("metros")
+            val result_metros = service.listLinesMetros("metros")
 
-            result.result.metros?.map {
+            result_metros.result.metros?.map {
                 val code = it.code
                 val stationsList = service.listStationsMetros("metros", code)
                 stationsList.result.stations.map {
@@ -49,6 +49,67 @@ class SplashActivity  : AppCompatActivity () {
                     false)
                     stationDao?.addStation(station)
                 }
+            }
+
+            val result_tramways = service.listLinesMetros("tramways")
+
+            result_tramways.result.tramways?.map {
+                val code = it.code
+                val stationsList = service.listStationsMetros("tramways", code)
+                stationsList.result.stations.map {
+                    val station = Station(
+                        0,
+                        "tramways",
+                        code,
+                        it.name,
+                        it.slug,
+                        null,
+                        false)
+                    stationDao?.addStation(station)
+                }
+
+            }
+
+            val result_rerA = service.listStationsMetros("rers", "A")
+
+            result_rerA.result.stations?.map {
+                val station = Station(
+                    0,
+                    "rers",
+                    "A",
+                    it.name,
+                    it.slug,
+                    null,
+                    false)
+                stationDao?.addStation(station)
+            }
+
+            val result_rerB = service.listStationsMetros("rers", "B")
+
+            result_rerB.result.stations?.map {
+                val station = Station(
+                    0,
+                    "rers",
+                    "B",
+                    it.name,
+                    it.slug,
+                    null,
+                    false)
+                stationDao?.addStation(station)
+            }
+
+            val result_rerE = service.listStationsMetros("rers", "E")
+
+            result_rerE.result.stations?.map {
+                val station = Station(
+                    0,
+                    "rers",
+                    "E",
+                    it.name,
+                    it.slug,
+                    null,
+                    false)
+                stationDao?.addStation(station)
             }
 
         }

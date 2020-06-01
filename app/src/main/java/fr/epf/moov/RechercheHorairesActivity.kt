@@ -54,9 +54,15 @@ class RechercheHorairesActivity : AppCompatActivity() {
             runBlocking {
                 allStations = stationDao?.getStations()
                 allStations?.map {
-                    allStationsName.add("${it.nameStation} ( Métro ${it.codeLine} )")
+                    if(it.typeLine == "metros") {
+                        allStationsName.add("${it.nameStation} ( Métro ${it.codeLine} )")
+                    }
+                    if(it.typeLine == "tramways") {
+                        allStationsName.add("${it.nameStation} ( Tramway ${it.codeLine} )")
+                    }
                 }
             }
+            Log.d("nom_Stations", allStationsName.toString())
             //Récupération des stations favoris
             runBlocking {
                 favStations = savedStationDao?.getStations()
@@ -115,11 +121,21 @@ class RechercheHorairesActivity : AppCompatActivity() {
                 retour_textview.text = listDestinations?.get(1)
                 val cityCsv = resources.openRawResource(R.raw.pictogrammes)
                 val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
-                val drawableName: String = "m${code}"
                 var resources: Resources = this.resources
-                val id: Int =
-                    resources.getIdentifier(drawableName, "drawable", this.packageName)
-                pictogram_imageview.setImageResource(id)
+
+                if(type == "metros") {
+                    val drawableName: String = "m${code}"
+                    val id: Int =
+                        resources.getIdentifier(drawableName, "drawable", this.packageName)
+                    pictogram_imageview.setImageResource(id)
+                }
+                if(type == "tramways") {
+                    val drawableName: String = "t${code}"
+                    val id: Int =
+                        resources.getIdentifier(drawableName, "drawable", this.packageName)
+                    pictogram_imageview.setImageResource(id)
+                }
+
                 /* listPictogrammes.map {
                        var listp = getListPictogramme(it.toString())
                        if (listp[1] == "M${code}") {

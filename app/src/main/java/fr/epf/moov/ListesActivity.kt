@@ -43,7 +43,12 @@ class ListesActivity : AppCompatActivity() {
             if( type == "rers") {
                 type_image.setImageResource(R.drawable.rer)
                 result.result.rers?.map {
-                    MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id, type))
+                    if("${it.code}" != "C" && "${it.code}" != "D") {
+                        MetroLine.all.add(
+                            MetroLine("${it.code}", "${it.name}", "${it.directions}", it.id, type
+                            )
+                        )
+                    }
                 }
                 val result_traffic = service.getTraffic("rers")
                 result_traffic.result.rers?.map{
@@ -59,7 +64,7 @@ class ListesActivity : AppCompatActivity() {
                 }
                 val result_traffic = service.getTraffic("tramways")
                 result_traffic.result.tramways?.map{
-                    Traffic.all.add(Traffic("${it.line}", "${it.slug}", "${it.title}", "${it.message}"))
+                    Traffic.all.add(Traffic(it.line.toLowerCase(), "${it.slug}", "${it.title}", "${it.message}"))
                 }
             }
 

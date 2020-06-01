@@ -2,6 +2,7 @@ package fr.epf.moov
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,7 +50,6 @@ class DetailLineActivity: AppCompatActivity() {
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-
 
         runBlocking {
             val result = service.getTrafficLine(type, code)
