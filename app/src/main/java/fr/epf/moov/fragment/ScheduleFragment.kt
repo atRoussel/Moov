@@ -93,7 +93,7 @@ class ScheduleFragment : Fragment(){
             hideKeyboard()
             val autoComplete_text = autoComplete_stations.text.toString()
             val stationName = autoComplete_text.substringBefore(" (")
-            val codeLine = autoComplete_text.substringAfter("( Métro ").substringBefore(" )")
+            val codeLine = autoComplete_text.substringAfter("( Ligne ").substringBefore(" )")
             var slug = ""
             var type = ""
             var code = ""

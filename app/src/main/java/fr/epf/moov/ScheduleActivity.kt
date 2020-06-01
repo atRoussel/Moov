@@ -78,8 +78,8 @@ class ScheduleActivity : AppCompatActivity() {
                 Toast.makeText(this, "Veuillez entrez un nom de station", Toast.LENGTH_SHORT).show()
             } else {
 
-                val stationName = autoComplete_text.substringBefore(" (Métro")
-                val codeLine = autoComplete_text.substringAfter("(Métro ").substringBefore(")")
+                val stationName = autoComplete_text.substringBefore(" (Ligne")
+                val codeLine = autoComplete_text.substringAfter("(Ligne ").substringBefore(")")
                 var slug = ""
                 var type = ""
                 var code = ""

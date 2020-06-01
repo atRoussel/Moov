@@ -9,30 +9,30 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="fr.epf.moov.fragment.ScheduleFragment"
-        android:label="fragment_schedule"
+        android:label="Moov"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_find"
         android:name="fr.epf.moov.fragment.QrCodeFragment"
-        android:label="fragment_qrcode"
+        android:label="QR Code"
         tools:layout="@layout/fragment_qrcode"/>
 
     <fragment
         android:id="@+id/navigation_profil"
         android:name="fr.epf.moov.fragment.ListFragment"
-        android:label="fragment_lists"
+        android:label="Transport"
         tools:layout="@layout/fragment_lists"/>
 
     <fragment
         android:id="@+id/navigation_saved"
         android:name="fr.epf.moov.fragment.FavorisFragment"
-        android:label="fragment_favoris"
+        android:label="Favoris"
         tools:layout="@layout/fragment_favoris"/>
     <fragment
         android:id="@+id/navigation_trip"
         android:name="fr.epf.moov.fragment.MapsFragment"
-        android:label="fragment_maps"
+        android:label="Cartes"
         tools:layout="@layout/fragment_maps"/>
 
 </navigation>
