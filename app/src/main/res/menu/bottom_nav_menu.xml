@@ -11,7 +11,7 @@
         android:title="Transport" />
     <item
         android:id="@+id/navigation_trip"
-        android:icon="@drawable/address"
+        android:icon="@drawable/icone_map"
         android:title="Cartes" />
     <item
         android:id="@+id/navigation_find"

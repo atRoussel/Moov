@@ -8,13 +8,43 @@ xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="20dp"
     tools:context=".ListesActivity">
 
-    <ImageView
-        android:id="@+id/type_image"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:elevation="1dp"
+            android:id="@+id/bouton_metro"
+            android:layout_marginLeft="95dp"
+            android:src="@drawable/metro"
+            android:layout_marginTop="20dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp" />
+
+        <ImageView
+            android:id="@+id/bouton_rer"
+            android:layout_marginLeft="25dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/rer" />
+
+        <ImageView
+            android:id="@+id/bouton_tramway"
+            android:layout_marginLeft="25dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/tramway" />
+
+    </LinearLayout>
+
+
+
 
 
 <androidx.recyclerview.widget.RecyclerView

@@ -18,18 +18,115 @@ class ListesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listes)
         val service = retrofit().create(RATPService::class.java)
-        val type = intent.getStringExtra("type")
+        //var type = intent.getStringExtra("type")
+        var type = "metros"
 
         metroLines_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        runBlocking {
+        bouton_metro.setOnClickListener {
+            type = "metros"
+            runBlocking {
+                val result = service.listLinesMetros(type)
+                MetroLine.all.clear()
+                Traffic.all.clear()
+                result.result.metros?.map {
+                    if ("${it.code}" != "Fun" && "${it.code}" != "Orv") {
+                        MetroLine.all.add(
+                            MetroLine("${it.code}", "${it.name}", "${it.directions}", it.id, type)
+                        )
+                    }
+                }
+                val result_traffic = service.getTraffic("metros")
+                result_traffic.result.metros?.map {
+                    Traffic.all.add(
+                        Traffic(
+                            "${it.line}",
+                            "${it.slug}",
+                            "${it.title}",
+                            "${it.message}"
+                        )
+                    )
+                }
+            }
+
+            metroLines_recyclerview.adapter =
+                MetroLineAdapter(MetroLine.all)
+        }
+
+        bouton_rer.setOnClickListener {
+            type = "rers"
+            runBlocking {
+                val result = service.listLinesMetros(type)
+                MetroLine.all.clear()
+                Traffic.all.clear()
+                result.result.rers?.map {
+                    if ("${it.code}" != "C" && "${it.code}" != "D") {
+                        MetroLine.all.add(
+                            MetroLine(
+                                "${it.code}", "${it.name}", "${it.directions}", it.id, type
+                            )
+                        )
+                    }
+                }
+                val result_traffic = service.getTraffic("rers")
+                result_traffic.result.rers?.map {
+                    Traffic.all.add(
+                        Traffic(
+                            "${it.line}",
+                            "${it.slug}",
+                            "${it.title}",
+                            "${it.message}"
+                        )
+                    )
+                }
+            }
+
+            metroLines_recyclerview.adapter =
+                MetroLineAdapter(MetroLine.all)
+        }
+
+        bouton_tramway.setOnClickListener {
+            type = "tramways"
+            runBlocking {
+                val result = service.listLinesMetros(type)
+                MetroLine.all.clear()
+                Traffic.all.clear()
+                result.result.tramways?.map {
+                    if ("${it.code}" != "11") {
+                        MetroLine.all.add(
+                            MetroLine(
+                                "${it.code}",
+                                "${it.name}",
+                                "${it.directions}",
+                                it.id,
+                                type
+                            )
+                        )
+                    }
+                }
+                val result_traffic = service.getTraffic("tramways")
+                result_traffic.result.tramways?.map {
+                    Traffic.all.add(
+                        Traffic(
+                            it.line.toLowerCase(),
+                            "${it.slug}",
+                            "${it.title}",
+                            "${it.message}"
+                        )
+                    )
+                }
+
+                metroLines_recyclerview.adapter =
+                    MetroLineAdapter(MetroLine.all)
+            }
+
+            /*runBlocking {
             val result = service.listLinesMetros(type)
             MetroLine.all.clear()
             Traffic.all.clear()
 
             if(type == "metros") {
-                type_image.setImageResource(R.drawable.metro)
                 result.result.metros?.map {
                     if("${it.code}" != "Fun" && "${it.code}" != "Orv") {
                         MetroLine.all.add(MetroLine( "${it.code}","${it.name}", "${it.directions}", it.id, type))
@@ -41,7 +138,6 @@ class ListesActivity : AppCompatActivity() {
                 }
             }
             if( type == "rers") {
-                type_image.setImageResource(R.drawable.rer)
                 result.result.rers?.map {
                     if("${it.code}" != "C" && "${it.code}" != "D") {
                         MetroLine.all.add(
@@ -56,7 +152,6 @@ class ListesActivity : AppCompatActivity() {
                 }
             }
             if( type == "tramways") {
-                type_image.setImageResource(R.drawable.tramway)
                 result.result.tramways?.map {
                     if("${it.code}" != "11") {
                         MetroLine.all.add(MetroLine("${it.code}", "${it.name}", "${it.directions}", it.id, type))
@@ -71,6 +166,8 @@ class ListesActivity : AppCompatActivity() {
         }
 
         metroLines_recyclerview.adapter =
-            MetroLineAdapter(MetroLine.all)
+            MetroLineAdapter(MetroLine.all)*/
+        }
+
     }
 }
