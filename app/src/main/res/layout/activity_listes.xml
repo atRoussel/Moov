@@ -6,40 +6,66 @@ xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="20dp"
-    tools:context=".ListesActivity">
+    tools:context=".ChooseTransportActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:elevation="1dp"
-            android:id="@+id/bouton_metro"
-            android:layout_marginLeft="95dp"
-            android:src="@drawable/metro"
-            android:layout_marginTop="20dp"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="20dp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_metro"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:id="@+id/bouton_metro"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:src="@drawable/metro" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardview_rer"
+            android:layout_width="60dp"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_gravity="center"
+            android:layout_height="60dp">
 
         <ImageView
             android:id="@+id/bouton_rer"
-            android:layout_marginLeft="25dp"
             android:layout_width="55dp"
+            android:layout_gravity="center"
             android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:src="@drawable/rer" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardview_tramway"
+            android:layout_width="60dp"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_gravity="center"
+            android:layout_height="60dp">
 
         <ImageView
             android:id="@+id/bouton_tramway"
-            android:layout_marginLeft="25dp"
             android:layout_width="55dp"
+            android:layout_gravity="center"
             android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:src="@drawable/tramway" />
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
