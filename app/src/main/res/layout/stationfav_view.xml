@@ -41,6 +41,18 @@
                 app:layout_constraintRight_toRightOf="@+id/station_name_layout"
                 app:layout_constraintTop_toTopOf="@+id/station_name_layout" />
 
+            <ImageView
+                android:id="@+id/develop_imageview"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:rotation ="90"
+                android:src="@drawable/right_arrow"
+                android:tint="@color/white"
+                app:layout_constraintRight_toLeftOf="@+id/fav_imageview"
+                app:layout_constraintTop_toTopOf="@+id/station_name_layout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -60,6 +60,8 @@ class ScheduleFragment : Fragment(){
         val scheduleLayout = view.findViewById<CardView>(R.id.global_schedule_layout)
         val exchangeButton = view.findViewById<ImageButton>(R.id.destinations_exchange)
 
+
+
         schedules_recyclerview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         val database =
