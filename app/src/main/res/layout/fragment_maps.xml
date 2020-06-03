@@ -1,36 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical"
     tools:context=".fragment.MapsFragment">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+      android:orientation="vertical">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="50dp"
+          android:layout_marginLeft="20dp"
+          android:text="Carte globale"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/map"
-            android:scaleType="centerCrop"/>
+      <androidx.cardview.widget.CardView
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:layout_width="150dp"
+          android:layout_marginLeft="30dp"
+          android:layout_height="150dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/map_plus_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            app:backgroundTint="@color/white"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:src="@drawable/ic_zoom_out_map_black_24dp"
-            android:tint="@color/colorPrimaryDark"
-            app:fabSize="mini" />
-    </androidx.cardview.widget.CardView>
+         <ImageView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:src="@drawable/map"
+             android:id="@+id/map_imageview"
+             android:scaleType="centerCrop"/>
+
+         <com.google.android.material.floatingactionbutton.FloatingActionButton
+             android:id="@+id/map_plus_button"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+             android:layout_gravity="end"
+             app:backgroundTint="@color/white"
+             android:backgroundTint="@color/white"
+             android:clickable="true"
+             android:src="@drawable/ic_zoom_out_map_black_24dp"
+             android:tint="@color/colorPrimaryDark"
+             app:fabSize="mini" />
+      </androidx.cardview.widget.CardView>
+
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="50dp"
+          android:layout_marginLeft="20dp"
+          android:text="Cartes métros"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/maps_metros_recyclerview"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginLeft="30dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginRight="30dp"
+          android:layout_marginBottom="20dp"
+          android:elevation="0dp"
+          tools:listitem="@layout/map_view" />
+
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="50dp"
+          android:layout_marginLeft="20dp"
+          android:text="Cartes rers"/>
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/maps_rers_recyclerview"
+          android:orientation="horizontal"
+          android:layout_marginLeft="30dp"
+          android:layout_marginRight="30dp"
+          android:layout_gravity="center"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="20dp"
+          android:elevation="0dp"
+          tools:listitem="@layout/map_view"/>
+
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="50dp"
+          android:layout_marginLeft="20dp"
+          android:text="Cartes trams"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/maps_trams_recyclerview"
+          android:layout_marginLeft="30dp"
+          android:layout_marginRight="30dp"
+          android:layout_gravity="center"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="20dp"
+          android:elevation="0dp"
+          tools:listitem="@layout/map_view"/>
+   </LinearLayout>
 
 
 
-</LinearLayout>
+
+
+</ScrollView>

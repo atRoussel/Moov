@@ -13,4 +13,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="AppTheme.Background">
+        <item name="android:windowBackground">@drawable/background_no_opacity</item>
+    </style>
+
 </resources>

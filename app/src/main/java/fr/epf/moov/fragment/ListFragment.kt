@@ -5,19 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import fr.epf.moov.ListesActivity
 import fr.epf.moov.R
-import fr.epf.moov.adapter.MetroLineAdapter
-import fr.epf.moov.model.MetroLine
-import fr.epf.moov.model.Traffic
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.coroutines.runBlocking
+
 
 class ListFragment : Fragment() {
 
@@ -29,14 +24,11 @@ class ListFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_lists, container,false)
-        val tramButton = view.findViewById<ImageView>(R.id.tram_button)
-        val metroButton = view.findViewById<ImageView>(R.id.metros_button)
-        val rerButton = view.findViewById<ImageView>(R.id.rers_button)
+        val tramButton = view.findViewById<ImageButton>(R.id.tram_button)
+        val metroButton = view.findViewById<ImageButton>(R.id.metros_button)
+        val rerButton = view.findViewById<ImageButton>(R.id.rers_button)
 
 
-        tramButton.setImageResource(R.drawable.tramway)
-        metroButton.setImageResource(R.drawable.metro)
-        rerButton.setImageResource(R.drawable.rer)
 
         metroButton.setOnClickListener{
             val intent = Intent(requireContext(), ListesActivity::class.java)
