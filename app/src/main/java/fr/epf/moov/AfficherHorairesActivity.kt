@@ -151,19 +151,31 @@ class AfficherHorairesActivity : AppCompatActivity(){
         aller_textview.text = listDestinations?.get(0)
         retour_textview.text = listDestinations?.get(1)
 
-
-        val drawableName: String = "m${stationclicked.codeLine}"
-
         var resources: Resources = this.resources
-        val id: Int =
-            resources.getIdentifier(drawableName, "drawable", this.packageName)
-        pictogram_imageview.setImageResource(id)
 
+        if(stationclicked.typeLine == "metros") {
+            val drawableName: String = "m${stationclicked.codeLine}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        if(stationclicked.typeLine == "rers") {
+            val newCode = stationclicked.codeLine.toLowerCase()
+            val drawableName : String = "m${newCode}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
+        if(stationclicked.typeLine == "tramways") {
+            val drawableName : String = "t${stationclicked.codeLine}"
+            val id: Int =
+                resources.getIdentifier(drawableName, "drawable", this.packageName)
+            pictogram_imageview.setImageResource(id)
+        }
 
         if(station.favoris==true)
             fav_imageview.setImageResource(R.drawable.fav_full)
         global_schedule_layout.visibility = View.VISIBLE
-
 
         fav_imageview.setOnClickListener {
             if (station.favoris == true) {

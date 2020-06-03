@@ -77,7 +77,6 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
                                     }
                                 })
                                 return
-
                             }
                         }
                     }
@@ -100,8 +99,6 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
         super.onResume()
                scannerView?.setResultHandler(this)
                 scannerView?.startCamera()
-
-
     }
 
     override fun onDestroy() {
@@ -119,19 +116,13 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
             }
 
         builder.setNeutralButton("Voir les horaires") { _, _ ->
-            Log.d("CCC", "Voir les horaires")
                 val intent = Intent(this, AfficherHorairesActivity :: class.java)
             intent.putExtra("station", nameStation)
                 this.startActivity(intent)
-
         }
 
         builder.setMessage(" Station trouvée : ${nameStation}")
         val alert: AlertDialog = builder.create()
         alert.show()
-
         }
-
-
-
     }
