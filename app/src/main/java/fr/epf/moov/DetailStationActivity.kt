@@ -3,6 +3,7 @@ package fr.epf.moov
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ class DetailStationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_station)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         var schedulesList: MutableList<String> = mutableListOf()
         val service = retrofit().create(RATPService::class.java)
@@ -182,5 +184,16 @@ class DetailStationActivity : AppCompatActivity() {
         }
 
         station_name_textview.text = name
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

@@ -3,6 +3,7 @@ package fr.epf.moov
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,8 @@ class AfficherHorairesActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedules_qrcode)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setLogo(R.drawable.logo_moov_mini)
 
         val database =
             Room.databaseBuilder(this, AppDatabase::class.java, "listStations")
@@ -126,7 +129,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
 
 
     private fun stationClicked(station : Station){
-        Toast.makeText(this, "Clicked: ${station.codeLine}", Toast.LENGTH_SHORT).show()
         val stationclicked : Station = station
         runBlocking {
             val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
@@ -211,6 +213,16 @@ class AfficherHorairesActivity : AppCompatActivity(){
                 aller_textview.text = listDestinations?.get(0)
                 retour_textview.text = listDestinations?.get(1)
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

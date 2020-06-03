@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/schedule_global_layout"
     android:orientation="vertical"
     tools:context=".fragment.ScheduleFragment">
 
@@ -66,16 +67,20 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:id="@+id/station_name_layout"
+                android:background="@color/colorPrimaryDark"
                 android:layout_height="40dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="20dp"
                     android:gravity="center"
                     android:text="Raspail"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="@color/white"
-                    android:background="@color/colorPrimaryDark"
                     android:id="@+id/station_name_textview"/>
 
                 <ImageView
@@ -117,8 +122,8 @@
                     app:layout_constraintTop_toTopOf="@+id/schedule_layout"
                     app:layout_constraintBottom_toTopOf="@+id/retour_textview"
                     android:textStyle="bold"
-                    android:textSize="17dp"
-                    android:layout_marginLeft="15dp"
+                    android:textSize="18sp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:text="Mairie de Montrouge"
                     tools:ignore="MissingConstraints" />
@@ -127,9 +132,9 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
                     app:layout_constraintTop_toBottomOf="@+id/aller_textview"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp"
                     android:id="@+id/retour_textview"
-                    android:textSize="12dp"
+                    android:textSize="13sp"
                     android:text="Porte de Clignancourt"
                     tools:ignore="MissingConstraints" />
 
@@ -138,7 +143,7 @@
                     android:layout_height="45dp"
                     android:elevation="1dp"
                     android:scaleType="centerCrop"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/exchanging"
                     android:rotation="90"
@@ -168,5 +173,66 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+
+
+
+            
+
     </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="100dp"
+        android:id="@+id/trafic_card"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#34FFBA52"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:id="@+id/astuce_layout"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Le saviez-vous ? "
+                    app:layout_constraintLeft_toLeftOf="@id/astuce_layout"
+                    app:layout_constraintRight_toRightOf="@id/astuce_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/astuce_layout"
+                    app:layout_constraintTop_toTopOf="@id/astuce_layout"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/logo_warning_imageview"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="@id/astuce_layout"
+                    app:layout_constraintRight_toRightOf="@id/astuce_layout"
+                    app:layout_constraintTop_toTopOf="@id/astuce_layout"
+                    android:backgroundTint="@color/white"
+                    android:paddingRight="5dp"
+                    android:src="@drawable/idea" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/astuce_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
