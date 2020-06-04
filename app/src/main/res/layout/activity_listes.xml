@@ -6,9 +6,11 @@ xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="20dp"
-    tools:context=".ChooseTransportActivity">
+    tools:context=".fragment.ListFragment"
+    android:layout_marginBottom="55dp">
 
     <LinearLayout
+        android:layout_marginLeft="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
