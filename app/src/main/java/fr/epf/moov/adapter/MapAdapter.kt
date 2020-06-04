@@ -30,6 +30,21 @@ class MapAdapter (val maps : MutableList<String>) : RecyclerView.Adapter<MapAdap
     override fun onBindViewHolder(holder: MapViewHolder, position: Int) {
         val map = maps[position]
 
+        var name = ""
+        var wich = map.substringAfter("map_")
+        if(wich[0] =='m'){
+            val code = wich.substringAfter('m')
+            name = "Métro $code"
+        }else if(wich[0] == 'r'){
+            val code = wich.substringAfter('r')
+            name = "RER ${code.toUpperCase()}"
+        }else if(wich[0] == 't'){
+            val code = wich.substringAfter('t')
+            name = "Tram $code"
+        }
+
+
+        holder.mapView.map_textview.text = name
         val id: Int =
             context.resources.getIdentifier(map, "drawable", context.packageName)
         holder.mapView.map_imageview.setImageResource(id)

@@ -7,12 +7,29 @@
     app:cardCornerRadius="5dp"
     android:layout_height="150dp">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/map"
-        android:id="@+id/map_imageview"
-        android:scaleType="centerCrop"/>
+        android:id="@+id/map_layout">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/map"
+            android:id="@+id/map_imageview"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#F0164E87"
+            android:id="@+id/map_textview"
+            android:text="Carte globale"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:textSize="18dp"
+            android:gravity="center"/>
+    </RelativeLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/map_plus_button"

@@ -25,6 +25,7 @@ import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
 import kotlinx.android.synthetic.main.activity_horaires.*
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.coroutines.runBlocking
 
 class ScheduleFragment : Fragment(){
@@ -39,6 +40,7 @@ class ScheduleFragment : Fragment(){
     val service = retrofit().create(RATPService::class.java)
     var listDestinations: List<String>? = null
     var stringDestinations:String = ""
+    var listAstuces: MutableList<String>? = mutableListOf()
     var way: String = "A"
     var url: String? = null
 
@@ -59,8 +61,12 @@ class ScheduleFragment : Fragment(){
         val favoriImage = view.findViewById<ImageView>(R.id.fav_imageview)
         val scheduleLayout = view.findViewById<CardView>(R.id.global_schedule_layout)
         val exchangeButton = view.findViewById<ImageButton>(R.id.destinations_exchange)
+        var astuceTextView = view.findViewById<TextView>(R.id.astuce_textview)
 
+        initAstuce()
+        val index = (0..9).random()
 
+        astuceTextView.text = listAstuces?.get(index)
 
         schedules_recyclerview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -77,7 +83,7 @@ class ScheduleFragment : Fragment(){
         runBlocking {
             allStations = stationDao?.getStations()
             allStations?.map {
-                allStationsName.add("${it.nameStation} ( Ligne ${it.codeLine} )")
+                allStationsName.add("${it.nameStation} (Ligne ${it.codeLine})")
             }
         }
 
@@ -94,8 +100,8 @@ class ScheduleFragment : Fragment(){
         buttonSchedule.setOnClickListener {
             hideKeyboard()
             val autoComplete_text = autoComplete_stations.text.toString()
-            val stationName = autoComplete_text.substringBefore(" (")
-            val codeLine = autoComplete_text.substringAfter("( Ligne ").substringBefore(" )")
+            val stationName = autoComplete_text.substringBefore(" (Ligne")
+            val codeLine = autoComplete_text.substringAfter("(Ligne ").substringBefore(")")
             var slug = ""
             var type = ""
             var code = ""
@@ -250,6 +256,22 @@ class ScheduleFragment : Fragment(){
                 favoris = true
         }
         return favoris
+    }
+
+
+    fun initAstuce(){
+        listAstuces?.add("De 1900 à 1992 il y avait une 1ère classe et une 2nd classe dans les métros pour séparer la haute société du reste de la population.")
+        listAstuces?.add("La station la plus profondément enfouie est Abbesses (ligne 12) qui se trouve 36 mètres sous le sol.")
+        listAstuces?.add("Châtelet - Les Halles est la plus grande station de métro au monde. Si les piliers et les affichages vous font zigzaguer et vous perdre c'est voulu : le but est de casser les grands mouvements de foule.")
+        listAstuces?.add("Il était courant de se faire insulter par le poinçonneur et les autres passagers si on tendait son ticket dans le mauvais sens ou qu'on le faisait tomber à l'entrée du quai, en retardant tout le monde.")
+        listAstuces?.add("Il existe pas mal de stations fantômes au sein de la capitale comme Haxo, une station entre la 3bis et la 7bis dont on n'a jamais percé les accès en surface car annulée avant sa mise en service.")
+        listAstuces?.add("Si vous voyez une scène de film dans le métro parisien, elle a surement tournée à Porte des Lilas Cinéma qui depuis sa fermeture ne sert qu'à ça. On y a notamment tourné Amélie Poulain.")
+        listAstuces?.add("Les stations Rue d'Allemagne et Berlin sont devenues Jaurès et Liège en 1914 après l'assassinat de Jaurès en 1914 et l'éclatement de la première Guerre Mondiale.")
+        listAstuces?.add("Pour construire la ligne 1, toute la rue de Rivoli a été éventrée pour une construction à cœur ouvert, suspendant ainsi tout trafic pendant les travaux.")
+        listAstuces?.add("Contrairement à la pensée générale, Gare du Nord est la station la plus fréquentée quotidiennement. Châtelet-les-Halles arrive en deuxième position.")
+        listAstuces?.add("Le lapin de la RATP qui se fait pincer très fort sur les portes du métro s'appelle Serge, c'est la mascotte de la RATP depuis 31 ans.")
+
+
     }
 
 

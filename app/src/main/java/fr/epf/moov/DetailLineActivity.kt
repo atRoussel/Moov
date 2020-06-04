@@ -3,6 +3,7 @@ package fr.epf.moov
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,11 +21,19 @@ class DetailLineActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_line)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
+        supportActionBar?.setIcon(R.drawable.fav_full)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+
         val code = intent.getStringExtra("code")
         val type = intent.getStringExtra("type")
         val directions = intent.getStringExtra("directions")
         var resources: Resources = this.resources
         val service = retrofit().create(RATPService::class.java)
+
+
 
         directions_textview.text = directions
 
@@ -83,5 +92,16 @@ class DetailLineActivity: AppCompatActivity() {
         station_recyclerview.adapter =
             StationAdapter(ListStations)
 
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

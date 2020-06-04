@@ -17,7 +17,9 @@ import kotlinx.android.synthetic.main.map_view.view.*
 
 class MapsFragment : Fragment(){
 
-    private var mapsList : MutableList<String> = mutableListOf()
+    private var mapsListRER : MutableList<String> = mutableListOf()
+    private var mapsListMetro : MutableList<String> = mutableListOf()
+    private var mapsListTram : MutableList<String> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,23 +49,53 @@ class MapsFragment : Fragment(){
 
 
         //TODO charger dans le splash
-        mapsList.add("map_m1")
-        mapsList.add("map_m2")
-        mapsList.add("map_m3")
-        mapsList.add("map_m3b")
-        mapsList.add("map_m4")
-        mapsList.add("map_m5")
-        mapsList.add("map_m6")
-        mapsList.add("map_m7")
 
+        mapsListMetro.clear()
+        mapsListMetro.add("map_m1")
+        mapsListMetro.add("map_m2")
+        mapsListMetro.add("map_m3")
+        mapsListMetro.add("map_m3b")
+        mapsListMetro.add("map_m4")
+        mapsListMetro.add("map_m5")
+        mapsListMetro.add("map_m6")
+        mapsListMetro.add("map_m7")
+        mapsListMetro.add("map_m7b")
+        mapsListMetro.add("map_m8")
+        mapsListMetro.add("map_m9")
+        mapsListMetro.add("map_m10")
+        mapsListMetro.add("map_m11")
+        mapsListMetro.add("map_m12")
+        mapsListMetro.add("map_m13")
+        mapsListMetro.add("map_m14")
 
 
         mapMetrosRecyclerview.adapter =
-            MapAdapter(mapsList)
+            MapAdapter(mapsListMetro)
+
+        mapsListRER.clear()
+        mapsListRER.add("map_ra")
+        mapsListRER.add("map_rb")
+        mapsListRER.add("map_rc")
+        mapsListRER.add("map_rd")
+        mapsListRER.add("map_re")
+
         mapRersRecyclerview.adapter =
-            MapAdapter(mapsList)
+            MapAdapter(mapsListRER)
+
+        mapsListTram.clear()
+        mapsListTram.add("map_t1")
+        mapsListTram.add("map_t2")
+        mapsListTram.add("map_t3a")
+        mapsListTram.add("map_t3b")
+        mapsListTram.add("map_t4")
+        mapsListTram.add("map_t5")
+        mapsListTram.add("map_t6")
+        mapsListTram.add("map_t7")
+        mapsListTram.add("map_t8")
+        mapsListTram.add("map_t11")
+
         mapTramsRecyclerview.adapter =
-            MapAdapter(mapsList)
+            MapAdapter(mapsListTram)
 
 
 

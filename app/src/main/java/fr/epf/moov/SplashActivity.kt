@@ -116,9 +116,6 @@ class SplashActivity  : AppCompatActivity () {
         }
 
 
-            astuce_layout.text ="Châtelet - Les Halles est la plus grande station de métro au monde. Si les piliers et les affichages vous font zigzaguer et vous perdre c'est voulu : le but est de casser les grands mouvements de foule."
-
-
 
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)

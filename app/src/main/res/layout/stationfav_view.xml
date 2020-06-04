@@ -18,15 +18,19 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/station_name_layout"
             android:layout_width="match_parent"
+            android:background="@color/colorPrimaryDark"
             android:layout_height="40dp">
 
             <TextView
                 android:id="@+id/stationfav_name_textview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimaryDark"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="Raspail"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
@@ -41,17 +45,7 @@
                 app:layout_constraintRight_toRightOf="@+id/station_name_layout"
                 app:layout_constraintTop_toTopOf="@+id/station_name_layout" />
 
-            <ImageView
-                android:id="@+id/develop_imageview"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:rotation ="90"
-                android:src="@drawable/right_arrow"
-                android:tint="@color/white"
-                app:layout_constraintRight_toLeftOf="@+id/fav_imageview"
-                app:layout_constraintTop_toTopOf="@+id/station_name_layout" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -131,9 +125,24 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp"
                 tools:listitem="@layout/schedule_view" />
+
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/develop_imageview"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:rotation ="90"
+            android:src="@drawable/right_arrow"
+            android:layout_gravity="end"
+            android:tint="@color/colorPrimaryDark"
+            app:layout_constraintRight_toLeftOf="@+id/fav_imageview"
+            app:layout_constraintTop_toTopOf="@+id/station_name_layout" />
 
 
     </LinearLayout>

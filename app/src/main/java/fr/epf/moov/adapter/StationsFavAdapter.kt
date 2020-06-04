@@ -2,7 +2,9 @@ package fr.epf.moov.adapter
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Typeface
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -177,6 +179,10 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
             if(scheduleVisible == true){
                 holder.stationFavView.schedules_recyclerview.visibility = View.GONE
                 holder.stationFavView.destinations_exchange.visibility = View.INVISIBLE
+                holder.stationFavView.aller_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17F)
+                holder.stationFavView.aller_textview.typeface = Typeface.DEFAULT
+                holder.stationFavView.retour_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17F)
+                holder.stationFavView.develop_imageview.rotation = 90F
                 scheduleVisible = false
                 }else{
                 runBlocking {
@@ -192,6 +198,10 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 }
                 holder.stationFavView.schedules_recyclerview.visibility = View.VISIBLE
                 holder.stationFavView.destinations_exchange.visibility = View.VISIBLE
+                holder.stationFavView.develop_imageview.rotation = 270F
+                holder.stationFavView.aller_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18F)
+                holder.stationFavView.aller_textview.typeface = Typeface.DEFAULT_BOLD
+                holder.stationFavView.retour_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13F)
                 scheduleVisible = true
             }
 
@@ -215,6 +225,8 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 }
                 holder.stationFavView.schedules_recyclerview.adapter =
                     ScheduleAdapter(schedulesList)
+                stringDestinations?.clear()
+                stringDestinations = getListDestinations(station?.directionLine)
                 holder.stationFavView.aller_textview.text = stringDestinations?.get(1)
                 holder.stationFavView.retour_textview.text = stringDestinations?.get(0)
             } else if (way == "R") {
@@ -232,6 +244,8 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 }
                 holder.stationFavView.schedules_recyclerview.adapter =
                     ScheduleAdapter(schedulesList)
+                stringDestinations?.clear()
+                stringDestinations = getListDestinations(station?.directionLine)
                 holder.stationFavView.aller_textview.text = stringDestinations?.get(0)
                 holder.stationFavView.retour_textview.text = stringDestinations?.get(1)
             }
