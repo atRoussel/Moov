@@ -64,7 +64,8 @@ class RechercheHorairesActivity : AppCompatActivity() {
                     }
                 }
             }
-            Log.d("nom_Stations", allStationsName.toString())
+
+
             //Récupération des stations favoris
             runBlocking {
                 favStations = savedStationDao?.getStations()
@@ -161,7 +162,7 @@ class RechercheHorairesActivity : AppCompatActivity() {
                         station.favoris = false
                         fav_imageview.setImageResource(R.drawable.fav_empty)
                         runBlocking {
-                            savedStationDao?.deleteStation(station.id)
+                            savedStationDao?.deleteStation(station.codeLine, station.nameStation)
                         }
                         Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
                     } else if (station.favoris == false) {

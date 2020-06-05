@@ -31,7 +31,18 @@ class ScheduleAdapter (val schedules : MutableList<String>?) : RecyclerView.Adap
 
 
         val schedule = schedules?.get(position)
-        holder.scheduleView.schedule_textview.text = "${schedule}"
+
+        var textSchedule :String ? = ""
+        if(schedule == "0 mn" || schedule == "Train à quai"){
+            textSchedule = "Train à quai"
+        } else if( schedule == "1 mn" || schedule == "Train a l'approche"){
+            textSchedule = "Train à l'approche"
+        } else if (schedule == "Schedules unavailable"){
+            textSchedule = "Horaires indisponibles"
+        } else{
+            textSchedule = schedule
+        }
+        holder.scheduleView.schedule_textview.text = textSchedule
 
     }
 

@@ -147,7 +147,7 @@ class StationFavAdapter(val stations: List<Station>?) : RecyclerView.Adapter<Sta
                 if (station?.favoris == true) {
                     station?.favoris = false
                     runBlocking {
-                        savedStationDao?.deleteStation(station?.id)
+                        savedStationDao?.deleteStation(station?.codeLine, station?.nameStation)
                     }
 
 

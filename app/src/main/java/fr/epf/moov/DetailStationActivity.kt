@@ -1,5 +1,6 @@
 package fr.epf.moov
 
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -15,16 +16,19 @@ import fr.epf.moov.model.MetroLine
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.activity_detail_station.aller_textview
-import kotlinx.android.synthetic.main.activity_detail_station.pictogram_imageview
-import kotlinx.android.synthetic.main.activity_detail_station.retour_textview
-import kotlinx.android.synthetic.main.activity_detail_station.schedules_recyclerview
-import kotlinx.android.synthetic.main.activity_detail_station.station_name_textview
-import kotlinx.android.synthetic.main.activity_detail_station.fav_imageview
-import kotlinx.android.synthetic.main.activity_detail_station.destinations_exchange
+import kotlinx.android.synthetic.main.activity_detail_station.*
 import kotlinx.coroutines.runBlocking
 
 class DetailStationActivity : AppCompatActivity() {
+
+    var allStations: List<Station>? = null
+    lateinit var ma_station: Station
+    lateinit var direction: String
+    var stationDao: StationDao? = null
+    var savedStationDao: StationDao? = null
+    var savedStations: List<Station>? = null
+    var changeDirection = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_station)
@@ -38,12 +42,7 @@ class DetailStationActivity : AppCompatActivity() {
         val type = intent.getStringExtra("type")
         var resources: Resources = this.resources
 
-        var allStations: List<Station>? = null
-        lateinit var ma_station: Station
-        lateinit var direction: String
-        var stationDao: StationDao? = null
-        var savedStationDao: StationDao? = null
-        var changeDirection = false
+
 
         if(type == "metros") {
             val drawableName: String = "m${code}"
@@ -138,20 +137,48 @@ class DetailStationActivity : AppCompatActivity() {
         }
 
 
+        var nameMap = ""
+        when(type){
+            "metros" -> nameMap = "map_m${code}"
+            "rers" -> nameMap = "map_r${code.toLowerCase()}"
+            "tramways" -> nameMap = "map_t${code}"
+        }
+
+        where_layout.setOnClickListener {
+            val intent = Intent(this, ImageActivity::class.java)
+            intent.putExtra("map", nameMap)
+            this.startActivity(intent)
+        }
+
+
+
+
         val database =
             Room.databaseBuilder(this, AppDatabase::class.java, "listStations")
                 .build()
         stationDao = database.getStationDao()
 
+        val databasesaved =
+            Room.databaseBuilder(this, AppDatabase::class.java, "savedStations")
+                .build()
+        savedStationDao = databasesaved.getStationDao()
+
+
+
 
         //Récupération de toutes les stations
         runBlocking {
             allStations = stationDao?.getStations()
+            savedStations = savedStationDao?.getStations()
             allStations?.map {
                 if(it.nameStation == name && it.codeLine == code) {
                     ma_station = it
                 }
             }
+        }
+        savedStations?.forEach {
+            if (it.nameStation == ma_station.nameStation && it.codeLine == it.codeLine)
+                ma_station.favoris = true
         }
 
         ma_station.directionLine = direction
@@ -160,17 +187,12 @@ class DetailStationActivity : AppCompatActivity() {
             fav_imageview.setImageResource(R.drawable.fav_full)
         } else fav_imageview.setImageResource(R.drawable.fav_empty)
 
-        val databasesaved =
-            Room.databaseBuilder(this, AppDatabase::class.java, "savedStations")
-                .build()
-        savedStationDao = databasesaved.getStationDao()
-
         fav_imageview.setOnClickListener {
             if (ma_station.favoris == true) {
                 ma_station.favoris = false
                 fav_imageview.setImageResource(R.drawable.fav_empty)
                 runBlocking {
-                    savedStationDao?.deleteStation(ma_station.id)
+                    savedStationDao?.deleteStation(ma_station.codeLine, ma_station.nameStation)
                 }
                 Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
             } else if (ma_station.favoris == false) {

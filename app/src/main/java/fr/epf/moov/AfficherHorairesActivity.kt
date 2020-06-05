@@ -29,6 +29,7 @@ class AfficherHorairesActivity : AppCompatActivity(){
 
     private lateinit var nameStation: String
     var allStations: List<Station>? = null
+    var savedStations : List <Station>? = null
     private var stationDao: StationDao? = null
     val service = retrofit().create(RATPService::class.java)
     var listDestinations: List<String>? = null
@@ -73,15 +74,16 @@ class AfficherHorairesActivity : AppCompatActivity(){
 
         runBlocking {
             allStations = stationDao?.getStations()
+            savedStations = savedStationDao?.getStations()
         }
         var slug = ""
         var type = ""
         var code = ""
         var favoris = false
+
+
         allStations?.forEach {
-            Log.d("station", it.nameStation)
             if (it.nameStation == nameStation) {
-                Log.d("station","true")
                 slug = it.slugStation
                 type = it.typeLine
                 code = it.codeLine
@@ -89,6 +91,11 @@ class AfficherHorairesActivity : AppCompatActivity(){
                 runBlocking {
                     val result = service.getStation(type, code)
                     stringDestinations = result.result.directions
+                }
+
+                savedStations?.forEach {
+                    if (it.nameStation == nameStation && it.codeLine == code)
+                        favoris = true
                 }
 
                 station = Station(
@@ -131,6 +138,9 @@ class AfficherHorairesActivity : AppCompatActivity(){
     private fun stationClicked(station : Station){
         val stationclicked : Station = station
         runBlocking {
+            if(station.favoris==true) fav_imageview.setImageResource(R.drawable.fav_full)
+            else fav_imageview.setImageResource(R.drawable.fav_empty)
+            global_schedule_layout.visibility = View.VISIBLE
             val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
             schedulesList.clear()
 
@@ -181,8 +191,9 @@ class AfficherHorairesActivity : AppCompatActivity(){
             if (station.favoris == true) {
                 station.favoris = false
                 fav_imageview.setImageResource(R.drawable.fav_empty)
+                Log.d("FAVSTATION", station.toString())
                 runBlocking {
-                    savedStationDao?.deleteStation(station.id)
+                    savedStationDao?.deleteStation(station.codeLine, station.nameStation)
                 }
                 Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
             } else if (station.favoris == false) {

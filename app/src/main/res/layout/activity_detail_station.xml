@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +13,7 @@
         android:layout_width="375dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:id="@+id/global_schedule_layout"
         android:layout_marginTop="50dp">
 
@@ -60,24 +61,24 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
                     android:id="@+id/pictogram_imageview"
                     app:layout_constraintLeft_toLeftOf="@+id/schedule_layout"
                     app:layout_constraintTop_toTopOf="@+id/schedule_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/schedule_layout"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/schedule_layout"/>
                 <!--android:src="@drawable/test_pictogram"-->
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="245dp"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/aller_textview"
                     app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
                     app:layout_constraintTop_toTopOf="@+id/schedule_layout"
                     app:layout_constraintBottom_toTopOf="@+id/retour_textview"
                     android:textStyle="bold"
-                    android:textSize="17dp"
-                    android:layout_marginLeft="15dp"
+                    android:textSize="18sp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:text="Mairie de Montrouge"
                     tools:ignore="MissingConstraints" />
@@ -86,9 +87,9 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
                     app:layout_constraintTop_toBottomOf="@+id/aller_textview"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="15dp"
                     android:id="@+id/retour_textview"
-                    android:textSize="12dp"
+                    android:textSize="14sp"
                     android:text="Porte de Clignancourt"
                     tools:ignore="MissingConstraints" />
 
@@ -97,7 +98,7 @@
                     android:layout_height="45dp"
                     android:elevation="1dp"
                     android:scaleType="centerCrop"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/exchanging"
                     android:rotation="90"
@@ -123,4 +124,48 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/trafic_card"
+        android:layout_height="50dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:id="@+id/where_layout"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:text="Où se trouve ma station ? "
+                    app:layout_constraintLeft_toLeftOf="@id/where_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/where_layout"
+                    app:layout_constraintTop_toTopOf="@id/where_layout"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/logo_warning_imageview"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="@id/where_layout"
+                    app:layout_constraintRight_toRightOf="@id/where_layout"
+                    app:layout_constraintTop_toTopOf="@id/where_layout"
+                    android:backgroundTint="@color/white"
+                    android:paddingRight="5dp"
+                    android:src="@drawable/idea" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

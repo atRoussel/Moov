@@ -160,7 +160,7 @@ class ScheduleActivity : AppCompatActivity() {
                             station.favoris = false
                             fav_imageview.setImageResource(R.drawable.fav_empty)
                             runBlocking {
-                                savedStationDao?.deleteStation(station.id)
+                                savedStationDao?.deleteStation(station.codeLine, station.nameStation)
                             }
                             Toast.makeText(
                                 this,

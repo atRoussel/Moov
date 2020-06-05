@@ -106,79 +106,107 @@ class ScheduleFragment : Fragment(){
             var type = ""
             var code = ""
             var favoris = false
+            var verification = false
             allStations?.forEach {
                 if (it.nameStation == stationName && it.codeLine == codeLine) {
+                    verification = true
                     slug = it.slugStation
                     type = it.typeLine
                     code = it.codeLine
                     favoris = getFavoris(stationName, code)
                     runBlocking {
-                        val result = service.getStation(type, code)
-                        stringDestinations = result.result.directions
-                        listDestinations = getListDestinations(stringDestinations)
+
+                        if(code == "3b"){
+                            listDestinations = getListDestinations("Porte d'Asnieres - Marguerite Long / Porte de Vincennes")
+                       Log.d("Tram3B", "${listDestinations?.get(0)} + ${listDestinations?.get(1)}")
+                        }else{
+                            val result = service.getStation(type, code)
+                            stringDestinations = result.result.directions
+                            listDestinations = getListDestinations(stringDestinations)
+                        }
                     }
                 }
             }
-            station = Station(
-                0,
-                type,
-                code,
-                stationName,
-                slug,
-                stringDestinations,
-                favoris
-            )
-            runBlocking {
-                val result = service.getSchedules(type, code, slug, way)
-                schedulesList.clear()
-                result.result.schedules.map{
-                    var schedule = it.message
-                    schedulesList.add(schedule)
 
+            if(!verification){
+                Toast.makeText(requireContext(), "Nom de station invalide", Toast.LENGTH_SHORT).show()
+            }else {
+
+
+                station = Station(
+                    0,
+                    type,
+                    code,
+                    stationName,
+                    slug,
+                    stringDestinations,
+                    favoris
+                )
+                runBlocking {
+                    val result = service.getSchedules(type, code, slug, way)
+                    schedulesList.clear()
+                    result.result.schedules.map {
+                        var schedule = it.message
+                        schedulesList.add(schedule)
+
+                    }
                 }
+
+
+                schedules_recyclerview.adapter =
+                    ScheduleAdapter(schedulesList)
+
+                nameStation.text = stationName
+                aller.text = listDestinations?.get(0)
+                retour.text = listDestinations?.get(1)
+                val cityCsv = resources.openRawResource(R.raw.pictogrammes)
+                val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
+                var resources: Resources = this.resources
+
+                if (type == "metros") {
+                    val drawableName: String = "m${code}"
+                    val id: Int =
+                        resources.getIdentifier(
+                            drawableName,
+                            "drawable",
+                            requireActivity().packageName
+                        )
+                    pictogram.setImageResource(id)
+                }
+                if (type == "rers") {
+                    val newCode = code.toLowerCase()
+                    val drawableName: String = "m${newCode}"
+                    val id: Int =
+                        resources.getIdentifier(
+                            drawableName,
+                            "drawable",
+                            requireActivity().packageName
+                        )
+                    pictogram.setImageResource(id)
+                }
+                if (type == "tramways") {
+                    val drawableName: String = "t${code}"
+                    val id: Int =
+                        resources.getIdentifier(
+                            drawableName,
+                            "drawable",
+                            requireActivity().packageName
+                        )
+                    pictogram.setImageResource(id)
+                }
+
+                if (station.favoris)
+                    favoriImage.setImageResource(R.drawable.fav_full)
+
+                scheduleLayout.visibility = View.VISIBLE
             }
-            Log.d("OU", schedulesList.toString())
 
-
-            schedules_recyclerview.adapter =
-                ScheduleAdapter(schedulesList)
-
-            nameStation.text = stationName
-            aller.text = listDestinations?.get(0)
-            retour.text = listDestinations?.get(1)
-            val cityCsv = resources.openRawResource(R.raw.pictogrammes)
-            val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
-            var resources: Resources = this.resources
-
-            if(type == "metros") {
-                val drawableName: String = "m${code}"
-                val id: Int =
-                    resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
-                pictogram.setImageResource(id)
-            }
-            if(type == "rers") {
-                val newCode = code.toLowerCase()
-                val drawableName: String = "m${newCode}"
-                val id: Int =
-                    resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
-                pictogram.setImageResource(id)
-            }
-            if(type == "tramways") {
-                val drawableName: String = "t${code}"
-                val id: Int =
-                    resources.getIdentifier(drawableName, "drawable", requireActivity().packageName)
-                pictogram.setImageResource(id)
-            }
-
-            if (station.favoris == true)
-                favoriImage.setImageResource(R.drawable.fav_full)
-            scheduleLayout.visibility = View.VISIBLE
             favoriImage.setOnClickListener {
                 if (station.favoris == true) {
                     station.favoris = false
                     favoriImage.setImageResource(R.drawable.fav_empty)
                     runBlocking {
-                        savedStationDao?.deleteStation(station.id)
+                        savedStationDao?.deleteStation(station.codeLine, station.nameStation)
                     }
                     Toast.makeText(
                         requireContext(),

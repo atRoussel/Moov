@@ -9,6 +9,7 @@
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/image_view"
         android:layout_width="match_parent"
+        android:src="@drawable/map_m1"
         android:scaleType="centerInside"
         android:layout_height="match_parent"/>
 

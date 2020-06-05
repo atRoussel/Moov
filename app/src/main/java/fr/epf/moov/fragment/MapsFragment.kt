@@ -92,7 +92,6 @@ class MapsFragment : Fragment(){
         mapsListTram.add("map_t6")
         mapsListTram.add("map_t7")
         mapsListTram.add("map_t8")
-        mapsListTram.add("map_t11")
 
         mapTramsRecyclerview.adapter =
             MapAdapter(mapsListTram)
