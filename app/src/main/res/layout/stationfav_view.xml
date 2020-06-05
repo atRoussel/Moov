@@ -69,30 +69,31 @@
                 app:layout_constraintTop_toTopOf="@+id/schedule_layout" />
 
             <TextView
-                android:id="@+id/aller_textview"
-                android:layout_width="wrap_content"
+                android:layout_width="245dp"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:id="@+id/aller_textview"
+                app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
+                app:layout_constraintTop_toTopOf="@+id/schedule_layout"
+                app:layout_constraintBottom_toTopOf="@+id/retour_textview"
+                android:textStyle="bold"
+                android:textSize="18sp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:text="Mairie de Montrouge"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toTopOf="@+id/retour_textview"
-                app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
-                app:layout_constraintTop_toTopOf="@+id/schedule_layout"
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/retour_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="10dp"
-                android:text="Porte de Clignancourt"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="@+id/schedule_layout"
                 app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
                 app:layout_constraintTop_toBottomOf="@+id/aller_textview"
-                tools:ignore="MissingConstraints" />
+                android:layout_marginStart="15dp"
+                android:id="@+id/retour_textview"
+                android:textSize="14sp"
+                android:text="Porte de Clignancourt"
+                tools:ignore="MissingConstraints"/>
             <ImageButton
                 android:layout_width="45dp"
                 android:layout_height="45dp"
