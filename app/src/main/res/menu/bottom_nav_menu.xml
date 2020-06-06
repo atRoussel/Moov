@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_schedule"
         android:icon="@drawable/schedule"
         android:title="Horaires" />
     <item
-        android:id="@+id/navigation_profil"
+        android:id="@+id/navigation_list"
         android:icon="@drawable/train"
         android:title="Transport" />
     <item
-        android:id="@+id/navigation_trip"
+        android:id="@+id/navigation_map"
         android:icon="@drawable/icone_map"
         android:title="Cartes" />
     <item
-        android:id="@+id/navigation_find"
+        android:id="@+id/navigation_qrcode"
         android:icon="@drawable/qr_code"
         android:title="QR Code" />
     <item

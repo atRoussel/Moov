@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         if (switchView == 1 || switchView == 2 || switchView == 3) {
             val bundle = bundleOf("switchView" to switchView)
-            navController.navigate(R.id.navigation_find, bundle)
+            navController.navigate(R.id.navigation_qrcode, bundle)
         }
 
     }
