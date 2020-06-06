@@ -53,6 +53,7 @@ class ScheduleFragment : Fragment(){
         val view = inflater.inflate(R.layout.fragment_schedule, container,false)
         var schedules_recyclerview = view.findViewById<RecyclerView>(R.id.schedules_recyclerview)
         var  autoComplete_stations = view.findViewById<AutoCompleteTextView>(R.id. autoComplete_stations)
+        val autocomplete_layout = view.findViewById<LinearLayout>(R.id.autocomplete_layout)
         val buttonSchedule = view.findViewById<ImageButton>(R.id.schedule_button)
         val nameStation = view.findViewById<TextView>(R.id. station_name_textview)
         val  aller = view.findViewById<TextView>(R.id. aller_textview)
@@ -62,6 +63,7 @@ class ScheduleFragment : Fragment(){
         val scheduleLayout = view.findViewById<CardView>(R.id.global_schedule_layout)
         val exchangeButton = view.findViewById<ImageButton>(R.id.destinations_exchange)
         var astuceTextView = view.findViewById<TextView>(R.id.astuce_textview)
+        val astuceCard = view.findViewById<CardView>(R.id.astuce_card)
 
         initAstuce()
         val index = (0..9).random()
@@ -87,6 +89,9 @@ class ScheduleFragment : Fragment(){
             }
         }
 
+        astuceCard.setOnClickListener {
+            astuceCard.visibility = View.GONE
+        }
 
         //Récupération des stations favoris
         runBlocking {

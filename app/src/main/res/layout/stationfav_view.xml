@@ -8,6 +8,8 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginBottom="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal">
 
@@ -70,11 +72,13 @@
 
             <TextView
                 android:id="@+id/aller_textview"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:text="Mairie de Montrouge"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toTopOf="@+id/retour_textview"
                 app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
@@ -83,11 +87,13 @@
 
             <TextView
                 android:id="@+id/retour_textview"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginBottom="10dp"
                 android:text="Porte de Clignancourt"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/schedule_layout"
                 app:layout_constraintLeft_toRightOf="@+id/pictogram_imageview"
@@ -101,6 +107,7 @@
                 android:layout_marginRight="15dp"
                 android:backgroundTint="@color/white"
                 android:src="@drawable/exchanging"
+                android:tint="@color/colorPrimaryDark"
                 android:rotation="90"
                 android:visibility="invisible"
                 android:id="@+id/destinations_exchange"
