@@ -39,13 +39,11 @@
 
     </LinearLayout>
 
-
-
     <androidx.cardview.widget.CardView
         android:layout_width="375dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/global_schedule_layout"
         android:layout_marginTop="50dp">
 
