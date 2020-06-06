@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@drawable/background_transparent"
     android:orientation="vertical"
     tools:context=".DetailLineActivity">
 
@@ -29,10 +31,14 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:id="@+id/directions_textview"
+        android:layout_gravity="center"
+        android:background="@color/white"
         android:text="Chateau de Vincennes / La Defense"
         android:gravity="center"/>
 
@@ -82,7 +88,6 @@
 
                     android:backgroundTint="@color/white"
                     android:paddingRight="5dp" />
-                <!--android:tint="#f58300" ou #808000-->
 
             </LinearLayout>
 

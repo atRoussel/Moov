@@ -21,8 +21,6 @@ class DetailLineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_line)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayUseLogoEnabled(true)
-        supportActionBar?.setIcon(R.drawable.fav_full)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val code = intent.getStringExtra("code")

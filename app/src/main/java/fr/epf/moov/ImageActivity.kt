@@ -11,6 +11,7 @@ class ImageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image)
         val map = intent.getStringExtra("map")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val id = resources.getIdentifier(map, "drawable", packageName)
         image_view.setImageResource(id)

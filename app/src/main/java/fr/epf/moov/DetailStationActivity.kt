@@ -33,6 +33,7 @@ class DetailStationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_station)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         var schedulesList: MutableList<String> = mutableListOf()
         val service = retrofit().create(RATPService::class.java)

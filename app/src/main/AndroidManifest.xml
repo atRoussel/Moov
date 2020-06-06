@@ -18,8 +18,6 @@
         <activity
             android:name=".ImageActivity" />
         <activity
-            android:name=".QRCodeActivity"/>
-        <activity
             android:name=".DetailLineActivity" />
         <activity
             android:name=".QRScheduleActivity" />

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_transparent"
     android:orientation="vertical"
     tools:context=".QRScheduleActivity">
 
@@ -17,10 +18,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginTop="25dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
+            android:background="@color/white"
             android:text="Sélectionnez une ligne : "
             android:textSize="20dp" />
 

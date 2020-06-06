@@ -38,7 +38,7 @@ class QRScheduleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedules_qrcode)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setLogo(R.drawable.logo_moov_mini)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val database =
             Room.databaseBuilder(this, AppDatabase::class.java, "listStations")
