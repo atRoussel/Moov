@@ -7,13 +7,14 @@ xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_marginTop="20dp"
     tools:context=".fragment.ListFragment"
-    android:layout_marginBottom="55dp">
+    android:layout_marginBottom="?attr/actionBarSize">
 
     <LinearLayout
-        android:layout_marginLeft="70dp"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
@@ -21,8 +22,11 @@ xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_margin="5dp"
-            app:cardCornerRadius="10dp">
+            app:cardCornerRadius="10dp"
+            android:focusable="true">
 
             <ImageView
                 android:id="@+id/bouton_metro"
@@ -34,14 +38,15 @@ xmlns:tools="http://schemas.android.com/tools"
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/cardview_rer"
             android:layout_width="60dp"
             android:layout_margin="5dp"
             app:cardCornerRadius="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_gravity="center"
-            android:layout_height="60dp">
+            android:layout_height="60dp"
+            android:focusable="true">
 
         <ImageView
             android:id="@+id/bouton_rer"
@@ -52,14 +57,15 @@ xmlns:tools="http://schemas.android.com/tools"
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/cardview_tramway"
             android:layout_width="60dp"
             android:layout_margin="5dp"
             app:cardCornerRadius="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_gravity="center"
-            android:layout_height="60dp">
+            android:layout_height="60dp"
+            android:focusable="true">
 
         <ImageView
             android:id="@+id/bouton_tramway"
@@ -78,6 +84,7 @@ xmlns:tools="http://schemas.android.com/tools"
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/metroLines_recyclerview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    tools:listitem="@layout/metroline_view"/>
 
 </LinearLayout>

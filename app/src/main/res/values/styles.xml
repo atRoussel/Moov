@@ -14,9 +14,8 @@
     </style>
 
 
-    <!-- TODO : Change to @drawable/background_transparent-->
     <style name="AppTheme.Background">
-        <item name="android:windowBackground">@drawable/background_no_opacity</item>
+        <item name="android:windowBackground">@drawable/background_transparent</item>
     </style>
 
 </resources>

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        window.setBackgroundDrawableResource(R.drawable.background_no_opacity)
+        window.setBackgroundDrawableResource(R.drawable.background_transparent)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
