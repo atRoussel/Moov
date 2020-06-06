@@ -7,19 +7,19 @@
     tools:ignore="UnusedNavigation">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_schedule"
         android:name="fr.epf.moov.fragment.ScheduleFragment"
         android:label="Moov"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
-        android:id="@+id/navigation_find"
+        android:id="@+id/navigation_qrcode"
         android:name="fr.epf.moov.fragment.QrCodeFragment"
         android:label="QR Code"
         tools:layout="@layout/fragment_qrcode"/>
 
     <fragment
-        android:id="@+id/navigation_profil"
+        android:id="@+id/navigation_list"
         android:name="fr.epf.moov.fragment.ListFragment"
         android:label="Transport"
         tools:layout="@layout/fragment_lists"/>
@@ -30,7 +30,7 @@
         android:label="Favoris"
         tools:layout="@layout/fragment_favoris"/>
     <fragment
-        android:id="@+id/navigation_trip"
+        android:id="@+id/navigation_map"
         android:name="fr.epf.moov.fragment.MapsFragment"
         android:label="Cartes"
         tools:layout="@layout/fragment_maps"/>
