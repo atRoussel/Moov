@@ -43,8 +43,6 @@ class QrCodeFragment :Fragment(), ZXingScannerView.ResultHandler  {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
-
-                Toast.makeText(requireContext(), "Permission validée", Toast.LENGTH_LONG).show()
             } else {
                 requestPermission()
             }

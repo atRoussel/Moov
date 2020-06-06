@@ -13,7 +13,7 @@
     android:layout_height="300dp"
     android:layout_centerInParent="true"
     app:cardCornerRadius="5dp"
-    android:visibility="visible"
+    android:visibility="gone"
     android:id="@+id/empty_favoris_cardview"
     android:elevation="3dp">
 
