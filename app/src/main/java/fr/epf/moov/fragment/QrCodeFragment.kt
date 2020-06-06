@@ -64,7 +64,7 @@ class QrCodeFragment :Fragment(), ZXingScannerView.ResultHandler  {
 
     private fun requestPermission(){
         val permission : Array<String> = arrayOf(Manifest.permission.CAMERA)
-        ActivityCompat.requestPermissions(Activity(), permission, REQUEST_CAMERA )
+        ActivityCompat.requestPermissions(requireActivity(), permission, REQUEST_CAMERA )
     }
 
     fun onRequestPermissionResult(requestCode : Int, permission : Array<String>, grantResults : List<Int>){
