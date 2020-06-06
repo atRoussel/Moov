@@ -1,18 +1,13 @@
 package fr.epf.moov.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import fr.epf.moov.ListesActivity
 import fr.epf.moov.R
 import fr.epf.moov.adapter.MetroLineAdapter
 import fr.epf.moov.model.MetroLine
@@ -22,17 +17,16 @@ import fr.epf.moov.service.retrofit
 import kotlinx.android.synthetic.main.activity_listes.*
 import kotlinx.coroutines.runBlocking
 
-
 class ListFragment : Fragment() {
 
-    val service = retrofit().create(RATPService::class.java)
+    private val service = retrofit().create(RATPService::class.java)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.activity_listes, container,false)
+        val view = inflater.inflate(R.layout.activity_listes, container, false)
         val tramButton = view.findViewById<CardView>(R.id.cardview_tramway)
         val metroButton = view.findViewById<CardView>(R.id.cardview_metro)
         val rerButton = view.findViewById<CardView>(R.id.cardview_rer)
@@ -73,7 +67,7 @@ class ListFragment : Fragment() {
         metroLinesRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        metroButton.setOnClickListener{
+        metroButton.setOnClickListener {
             type = "metros"
             cardview_metro.elevation = 0F
             cardview_rer.elevation = 10F
@@ -110,7 +104,7 @@ class ListFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-        rerButton.setOnClickListener{
+        rerButton.setOnClickListener {
             type = "rers"
             cardview_metro.elevation = 10F
             cardview_rer.elevation = 0F
@@ -189,8 +183,6 @@ class ListFragment : Fragment() {
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             }
         }
-
-
 
         return view
     }

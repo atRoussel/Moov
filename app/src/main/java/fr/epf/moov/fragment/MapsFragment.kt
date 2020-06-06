@@ -12,8 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.epf.moov.ImageActivity
 import fr.epf.moov.R
 import fr.epf.moov.adapter.MapAdapter
-import kotlinx.android.synthetic.main.map_view.view.*
-
 
 class MapsFragment : Fragment(){
 
@@ -46,9 +44,6 @@ class MapsFragment : Fragment(){
             intent.putExtra("map", "map")
             startActivity(intent)
         }
-
-
-        //TODO charger dans le splash
 
         mapsListMetro.clear()
         mapsListMetro.add("map_m1")
@@ -95,8 +90,6 @@ class MapsFragment : Fragment(){
 
         mapTramsRecyclerview.adapter =
             MapAdapter(mapsListTram)
-
-
 
         return view
     }

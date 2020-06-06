@@ -15,16 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_moov"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-         <activity
-            android:name=".FavorisActivity" />
-        <activity
-            android:name=".RechercheHorairesActivity" />
-        <activity
-            android:name=".ListesActivity" />
-        <activity
-            android:name=".MapsActivity" />
-        <activity
-            android:name=".ChooseTransportActivity" />
         <activity
             android:name=".ImageActivity" />
         <activity
@@ -32,11 +22,9 @@
         <activity
             android:name=".DetailLineActivity" />
         <activity
-            android:name=".AfficherHorairesActivity" />
+            android:name=".QRScheduleActivity" />
         <activity
             android:name=".DetailStationActivity" />
-        <activity
-            android:name=".ScheduleActivity" />
         <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

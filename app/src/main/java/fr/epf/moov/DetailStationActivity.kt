@@ -42,31 +42,28 @@ class DetailStationActivity : AppCompatActivity() {
         val type = intent.getStringExtra("type")
         var resources: Resources = this.resources
 
-
-
-        if(type == "metros") {
+        if (type == "metros") {
             val drawableName: String = "m${code}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        if(type == "rers") {
+        if (type == "rers") {
             val newCode = code.toLowerCase()
-            val drawableName : String = "m${newCode}"
+            val drawableName: String = "m${newCode}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        if(type == "tramways") {
-            val drawableName : String = "t${code}"
+        if (type == "tramways") {
+            val drawableName: String = "t${code}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        Log.d("infos", code + name + slug + type)
 
         MetroLine.all.forEach {
-            if(it.code == code) {
+            if (it.code == code) {
                 var directions_line = it.directions.split(" / ")
                 direction = it.directions
                 aller_textview.text = directions_line[0]
@@ -90,8 +87,8 @@ class DetailStationActivity : AppCompatActivity() {
         schedules_recyclerview.adapter =
             ScheduleAdapter(schedulesList)
 
-        destinations_exchange.setOnClickListener{
-            if(changeDirection == true) {
+        destinations_exchange.setOnClickListener {
+            if (changeDirection == true) {
                 var aller_text = aller_textview.text
                 aller_textview.text = retour_textview.text
                 retour_textview.text = aller_text
@@ -136,9 +133,8 @@ class DetailStationActivity : AppCompatActivity() {
             }
         }
 
-
         var nameMap = ""
-        when(type){
+        when (type) {
             "metros" -> nameMap = "map_m${code}"
             "rers" -> nameMap = "map_r${code.toLowerCase()}"
             "tramways" -> nameMap = "map_t${code}"
@@ -150,9 +146,6 @@ class DetailStationActivity : AppCompatActivity() {
             this.startActivity(intent)
         }
 
-
-
-
         val database =
             Room.databaseBuilder(this, AppDatabase::class.java, "listStations")
                 .build()
@@ -163,15 +156,12 @@ class DetailStationActivity : AppCompatActivity() {
                 .build()
         savedStationDao = databasesaved.getStationDao()
 
-
-
-
         //Récupération de toutes les stations
         runBlocking {
             allStations = stationDao?.getStations()
             savedStations = savedStationDao?.getStations()
             allStations?.map {
-                if(it.nameStation == name && it.codeLine == code) {
+                if (it.nameStation == name && it.codeLine == code) {
                     ma_station = it
                 }
             }
@@ -183,7 +173,7 @@ class DetailStationActivity : AppCompatActivity() {
 
         ma_station.directionLine = direction
 
-        if(ma_station.favoris == true) {
+        if (ma_station.favoris == true) {
             fav_imageview.setImageResource(R.drawable.fav_full)
         } else fav_imageview.setImageResource(R.drawable.fav_empty)
 
@@ -194,20 +184,20 @@ class DetailStationActivity : AppCompatActivity() {
                 runBlocking {
                     savedStationDao?.deleteStation(ma_station.codeLine, ma_station.nameStation)
                 }
-                Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT)
+                    .show()
             } else if (ma_station.favoris == false) {
                 ma_station.favoris = true
                 fav_imageview.setImageResource(R.drawable.fav_full)
                 runBlocking {
                     savedStationDao?.addStation(ma_station)
                 }
-                Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
-
         station_name_textview.text = name
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

@@ -2,7 +2,6 @@ package fr.epf.moov
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +13,9 @@ import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
 import kotlinx.coroutines.runBlocking
 
-class DetailLineActivity: AppCompatActivity() {
+class DetailLineActivity : AppCompatActivity() {
 
-    var ListStations : MutableList<fr.epf.moov.model.Station> = mutableListOf()
+    var ListStations: MutableList<fr.epf.moov.model.Station> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,35 +25,32 @@ class DetailLineActivity: AppCompatActivity() {
         supportActionBar?.setIcon(R.drawable.fav_full)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-
         val code = intent.getStringExtra("code")
         val type = intent.getStringExtra("type")
         val directions = intent.getStringExtra("directions")
         var resources: Resources = this.resources
         val service = retrofit().create(RATPService::class.java)
 
-
-
         directions_textview.text = directions
 
-        if(type == "metros") {
+        if (type == "metros") {
             type_imageview.setImageResource(R.drawable.metro)
             val drawableName: String = "m${code}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        if(type == "rers") {
+        if (type == "rers") {
             type_imageview.setImageResource(R.drawable.rer)
             val newCode = code.toLowerCase()
-            val drawableName : String = "m${newCode}"
+            val drawableName: String = "m${newCode}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        if(type == "tramways") {
+        if (type == "tramways") {
             type_imageview.setImageResource(R.drawable.tramway)
-            val drawableName : String = "t${code}"
+            val drawableName: String = "t${code}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
@@ -63,11 +59,10 @@ class DetailLineActivity: AppCompatActivity() {
         runBlocking {
             val result = service.getTrafficLine(type, code)
             message_textview.text = result.result.message
-            if(result.result.slug == "normal") {
+            if (result.result.slug == "normal") {
                 trafic_card.visibility = View.GONE
             } else logo_warning_imageview.setImageResource(R.drawable.attention)
         }
-
 
         runBlocking {
             val result = service.listStationsMetros(type, code)
@@ -79,11 +74,10 @@ class DetailLineActivity: AppCompatActivity() {
                     it.name,
                     it.slug,
                     null,
-                false)
+                    false
+                )
                 ListStations.add(station)
-
             }
-
         }
 
         station_recyclerview.layoutManager =
@@ -91,9 +85,7 @@ class DetailLineActivity: AppCompatActivity() {
 
         station_recyclerview.adapter =
             StationAdapter(ListStations)
-
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

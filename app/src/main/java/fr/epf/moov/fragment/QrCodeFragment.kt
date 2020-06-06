@@ -14,17 +14,15 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.room.Room
 import com.google.zxing.Result
-import fr.epf.moov.AfficherHorairesActivity
+import fr.epf.moov.QRScheduleActivity
 import fr.epf.moov.R
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
-import kotlinx.android.synthetic.main.fragment_qrcode.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class QrCodeFragment :Fragment(), ZXingScannerView.ResultHandler  {
@@ -86,11 +84,9 @@ class QrCodeFragment :Fragment(), ZXingScannerView.ResultHandler  {
                                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                                             requestPermissions(permission, REQUEST_CAMERA)
                                         }
-
                                     }
                                 })
                                 return
-
                             }
                         }
                     }
@@ -113,8 +109,6 @@ class QrCodeFragment :Fragment(), ZXingScannerView.ResultHandler  {
         super.onResume()
         scannerView?.setResultHandler(this)
         scannerView?.startCamera()
-
-
     }
 
     override fun onDestroy() {
@@ -133,18 +127,13 @@ class QrCodeFragment :Fragment(), ZXingScannerView.ResultHandler  {
 
         builder.setNeutralButton("Voir les horaires") { _, _ ->
             Log.d("CCC", "Voir les horaires")
-            val intent = Intent(requireContext(), AfficherHorairesActivity :: class.java)
+            val intent = Intent(requireContext(), QRScheduleActivity :: class.java)
             intent.putExtra("station", nameStation)
             this.startActivity(intent)
-
         }
 
         builder.setMessage(" Station trouvée : ${nameStation}")
         val alert: AlertDialog = builder.create()
         alert.show()
-
     }
-
-
-
 }

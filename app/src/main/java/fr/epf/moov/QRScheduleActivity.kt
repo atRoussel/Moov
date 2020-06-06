@@ -16,31 +16,23 @@ import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.activity_horaires.aller_textview
-import kotlinx.android.synthetic.main.activity_horaires.global_schedule_layout
-import kotlinx.android.synthetic.main.activity_horaires.pictogram_imageview
-import kotlinx.android.synthetic.main.activity_horaires.retour_textview
-import kotlinx.android.synthetic.main.activity_horaires.schedules_recyclerview
-import kotlinx.android.synthetic.main.activity_horaires.station_name_textview
 import kotlinx.android.synthetic.main.activity_schedules_qrcode.*
 import kotlinx.coroutines.runBlocking
 
-class AfficherHorairesActivity : AppCompatActivity(){
+class QRScheduleActivity : AppCompatActivity() {
 
     private lateinit var nameStation: String
     var allStations: List<Station>? = null
-    var savedStations : List <Station>? = null
+    var savedStations: List<Station>? = null
     private var stationDao: StationDao? = null
     val service = retrofit().create(RATPService::class.java)
     var listDestinations: List<String>? = null
     var stringDestinations: String = ""
     private lateinit var station: Station
     var schedulesList: MutableList<String> = mutableListOf()
-    var listStations : MutableList<Station> = mutableListOf()
+    var listStations: MutableList<Station> = mutableListOf()
     private var savedStationDao: StationDao? = null
     var way: String = "A"
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,18 +51,12 @@ class AfficherHorairesActivity : AppCompatActivity(){
         savedStationDao = databasesaved.getStationDao()
 
         nameStation = intent.getStringExtra("station")
-        Log.d("station",nameStation)
+        Log.d("station", nameStation)
 
         schedules_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         station_choice_recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-
-
-
-
-
 
         runBlocking {
             allStations = stationDao?.getStations()
@@ -80,7 +66,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
         var type = ""
         var code = ""
         var favoris = false
-
 
         allStations?.forEach {
             if (it.nameStation == nameStation) {
@@ -116,14 +101,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
             StationChoiceAdapter(listStations) { station: Station ->
                 stationClicked(station)
             }
-
-     /*   if (listStations.size == 1){
-            choice_station_layout.visibility = View.GONE
-        }*/
-
-
-
-
     }
 
     fun getListDestinations(destinations: String?): List<String>? {
@@ -133,17 +110,19 @@ class AfficherHorairesActivity : AppCompatActivity(){
         return null
     }
 
-
-
-    private fun stationClicked(station : Station){
-        val stationclicked : Station = station
+    private fun stationClicked(station: Station) {
+        val stationclicked: Station = station
         runBlocking {
-            if(station.favoris==true) fav_imageview.setImageResource(R.drawable.fav_full)
+            if (station.favoris == true) fav_imageview.setImageResource(R.drawable.fav_full)
             else fav_imageview.setImageResource(R.drawable.fav_empty)
             global_schedule_layout.visibility = View.VISIBLE
-            val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
+            val result = service.getSchedules(
+                stationclicked.typeLine,
+                stationclicked.codeLine,
+                stationclicked.slugStation,
+                way
+            )
             schedulesList.clear()
-
 
             result.result.schedules.map {
                 var schedule = it.message
@@ -163,27 +142,27 @@ class AfficherHorairesActivity : AppCompatActivity(){
 
         var resources: Resources = this.resources
 
-        if(stationclicked.typeLine == "metros") {
+        if (stationclicked.typeLine == "metros") {
             val drawableName: String = "m${stationclicked.codeLine}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        if(stationclicked.typeLine == "rers") {
+        if (stationclicked.typeLine == "rers") {
             val newCode = stationclicked.codeLine.toLowerCase()
-            val drawableName : String = "m${newCode}"
+            val drawableName: String = "m${newCode}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
-        if(stationclicked.typeLine == "tramways") {
-            val drawableName : String = "t${stationclicked.codeLine}"
+        if (stationclicked.typeLine == "tramways") {
+            val drawableName: String = "t${stationclicked.codeLine}"
             val id: Int =
                 resources.getIdentifier(drawableName, "drawable", this.packageName)
             pictogram_imageview.setImageResource(id)
         }
 
-        if(station.favoris==true)
+        if (station.favoris == true)
             fav_imageview.setImageResource(R.drawable.fav_full)
         global_schedule_layout.visibility = View.VISIBLE
 
@@ -195,14 +174,16 @@ class AfficherHorairesActivity : AppCompatActivity(){
                 runBlocking {
                     savedStationDao?.deleteStation(station.codeLine, station.nameStation)
                 }
-                Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La station a été supprimée des favoris", Toast.LENGTH_SHORT)
+                    .show()
             } else if (station.favoris == false) {
                 station.favoris = true
                 fav_imageview.setImageResource(R.drawable.fav_full)
                 runBlocking {
                     savedStationDao?.addStation(station)
                 }
-                Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -210,7 +191,12 @@ class AfficherHorairesActivity : AppCompatActivity(){
             if (way == "A") {
                 way = "R"
                 runBlocking {
-                    val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
+                    val result = service.getSchedules(
+                        stationclicked.typeLine,
+                        stationclicked.codeLine,
+                        stationclicked.slugStation,
+                        way
+                    )
                     schedulesList.clear()
                     result.result.schedules.map {
                         var schedule = it.message
@@ -224,7 +210,12 @@ class AfficherHorairesActivity : AppCompatActivity(){
             } else if (way == "R") {
                 way = "A"
                 runBlocking {
-                    val result = service.getSchedules(stationclicked.typeLine, stationclicked.codeLine, stationclicked.slugStation, way)
+                    val result = service.getSchedules(
+                        stationclicked.typeLine,
+                        stationclicked.codeLine,
+                        stationclicked.slugStation,
+                        way
+                    )
                     schedulesList.clear()
                     result.result.schedules.map {
                         var schedule = it.message
@@ -248,7 +239,6 @@ class AfficherHorairesActivity : AppCompatActivity(){
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    }
+}
 
 

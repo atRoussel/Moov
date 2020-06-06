@@ -9,14 +9,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         window.setBackgroundDrawableResource(R.drawable.background_transparent)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -40,10 +37,9 @@ class MainActivity : AppCompatActivity() {
             val bundle = bundleOf("switchView" to switchView)
             navController.navigate(R.id.navigation_qrcode, bundle)
         }
-
     }
 
-    }
+}
 
 
 

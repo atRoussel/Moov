@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,11 +23,9 @@ import fr.epf.moov.data.StationDao
 import fr.epf.moov.model.Station
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.activity_horaires.*
-import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.coroutines.runBlocking
 
-class ScheduleFragment : Fragment(){
+class ScheduleFragment : Fragment() {
 
     var schedulesList: MutableList<String> = mutableListOf()
     var allStations: List<Station>? = null
@@ -39,7 +36,7 @@ class ScheduleFragment : Fragment(){
     private var savedStationDao: StationDao? = null
     val service = retrofit().create(RATPService::class.java)
     var listDestinations: List<String>? = null
-    var stringDestinations:String = ""
+    var stringDestinations: String = ""
     var listAstuces: MutableList<String>? = mutableListOf()
     var way: String = "A"
     var url: String? = null
@@ -50,13 +47,12 @@ class ScheduleFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_schedule, container,false)
+        val view = inflater.inflate(R.layout.fragment_schedule, container, false)
         var schedules_recyclerview = view.findViewById<RecyclerView>(R.id.schedules_recyclerview)
-        var  autoComplete_stations = view.findViewById<AutoCompleteTextView>(R.id. autoComplete_stations)
-        val autocomplete_layout = view.findViewById<LinearLayout>(R.id.autocomplete_layout)
+        var autoComplete_stations = view.findViewById<AutoCompleteTextView>(R.id.autoComplete_stations)
         val buttonSchedule = view.findViewById<ImageButton>(R.id.schedule_button)
-        val nameStation = view.findViewById<TextView>(R.id. station_name_textview)
-        val  aller = view.findViewById<TextView>(R.id. aller_textview)
+        val nameStation = view.findViewById<TextView>(R.id.station_name_textview)
+        val aller = view.findViewById<TextView>(R.id.aller_textview)
         val retour = view.findViewById<TextView>(R.id.retour_textview)
         val pictogram = view.findViewById<ImageView>(R.id.pictogram_imageview)
         val favoriImage = view.findViewById<ImageView>(R.id.fav_imageview)
@@ -121,10 +117,14 @@ class ScheduleFragment : Fragment(){
                     favoris = getFavoris(stationName, code)
                     runBlocking {
 
-                        if(code == "3b"){
-                            listDestinations = getListDestinations("Porte d'Asnieres - Marguerite Long / Porte de Vincennes")
-                       Log.d("Tram3B", "${listDestinations?.get(0)} + ${listDestinations?.get(1)}")
-                        }else{
+                        if (code == "3b") {
+                            listDestinations =
+                                getListDestinations("Porte d'Asnieres - Marguerite Long / Porte de Vincennes")
+                            Log.d(
+                                "Tram3B",
+                                "${listDestinations?.get(0)} + ${listDestinations?.get(1)}"
+                            )
+                        } else {
                             val result = service.getStation(type, code)
                             stringDestinations = result.result.directions
                             listDestinations = getListDestinations(stringDestinations)
@@ -133,11 +133,10 @@ class ScheduleFragment : Fragment(){
                 }
             }
 
-            if(!verification){
-                Toast.makeText(requireContext(), "Nom de station invalide", Toast.LENGTH_SHORT).show()
-            }else {
-
-
+            if (!verification) {
+                Toast.makeText(requireContext(), "Nom de station invalide", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 station = Station(
                     0,
                     type,
@@ -157,15 +156,12 @@ class ScheduleFragment : Fragment(){
                     }
                 }
 
-
                 schedules_recyclerview.adapter =
                     ScheduleAdapter(schedulesList)
 
                 nameStation.text = stationName
                 aller.text = listDestinations?.get(0)
                 retour.text = listDestinations?.get(1)
-                val cityCsv = resources.openRawResource(R.raw.pictogrammes)
-                val listPictogrammes: List<List<String>> = csvReader().readAll(cityCsv)
                 var resources: Resources = this.resources
 
                 if (type == "metros") {
@@ -199,13 +195,10 @@ class ScheduleFragment : Fragment(){
                         )
                     pictogram.setImageResource(id)
                 }
-
                 if (station.favoris)
                     favoriImage.setImageResource(R.drawable.fav_full)
-
                 scheduleLayout.visibility = View.VISIBLE
             }
-
             favoriImage.setOnClickListener {
                 if (station.favoris == true) {
                     station.favoris = false
@@ -224,7 +217,11 @@ class ScheduleFragment : Fragment(){
                     runBlocking {
                         savedStationDao?.addStation(station)
                     }
-                    Toast.makeText(requireContext(), "La station a été ajoutée aux favoris", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        "La station a été ajoutée aux favoris",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
@@ -260,13 +257,11 @@ class ScheduleFragment : Fragment(){
                 }
             }
         }
-
-
         return view
     }
 
 
-    fun getListDestinations(destinations: String?): List<String>? {
+    private fun getListDestinations(destinations: String?): List<String>? {
         if (destinations != null) {
             return destinations.split(" / ")
         }
@@ -282,7 +277,8 @@ class ScheduleFragment : Fragment(){
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-    fun getFavoris(stationName: String, codeLine: String): Boolean {
+
+    private fun getFavoris(stationName: String, codeLine: String): Boolean {
         var favoris = false
         favStations?.forEach {
             if (stationName == it.nameStation && codeLine == it.codeLine)
@@ -292,7 +288,7 @@ class ScheduleFragment : Fragment(){
     }
 
 
-    fun initAstuce(){
+    private fun initAstuce() {
         listAstuces?.add("De 1900 à 1992 il y avait une 1ère classe et une 2nd classe dans les métros pour séparer la haute société du reste de la population.")
         listAstuces?.add("La station la plus profondément enfouie est Abbesses (ligne 12) qui se trouve 36 mètres sous le sol.")
         listAstuces?.add("Châtelet - Les Halles est la plus grande station de métro au monde. Si les piliers et les affichages vous font zigzaguer et vous perdre c'est voulu : le but est de casser les grands mouvements de foule.")

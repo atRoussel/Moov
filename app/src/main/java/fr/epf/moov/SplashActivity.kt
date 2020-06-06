@@ -3,23 +3,19 @@ package fr.epf.moov
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import fr.epf.moov.data.AppDatabase
 import fr.epf.moov.data.StationDao
-import fr.epf.moov.model.MetroLine
 import fr.epf.moov.model.Station
-import fr.epf.moov.model.Traffic
 import fr.epf.moov.service.RATPService
 import fr.epf.moov.service.retrofit
-import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.coroutines.runBlocking
 
-class SplashActivity  : AppCompatActivity () {
+class SplashActivity : AppCompatActivity() {
 
-    private var stationDao : StationDao? = null
-    val service = retrofit().create(RATPService::class.java)
+    private var stationDao: StationDao? = null
+    private val service = retrofit().create(RATPService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +26,6 @@ class SplashActivity  : AppCompatActivity () {
                 .build()
 
         stationDao = database.getStationDao()
-
 
         runBlocking {
             stationDao?.deleteStations()
@@ -47,7 +42,8 @@ class SplashActivity  : AppCompatActivity () {
                         it.name,
                         it.slug,
                         null,
-                    false)
+                        false
+                    )
                     stationDao?.addStation(station)
                 }
             }
@@ -65,7 +61,8 @@ class SplashActivity  : AppCompatActivity () {
                         it.name,
                         it.slug,
                         null,
-                        false)
+                        false
+                    )
                     stationDao?.addStation(station)
                 }
 
@@ -81,7 +78,8 @@ class SplashActivity  : AppCompatActivity () {
                     it.name,
                     it.slug,
                     null,
-                    false)
+                    false
+                )
                 stationDao?.addStation(station)
             }
 
@@ -95,7 +93,8 @@ class SplashActivity  : AppCompatActivity () {
                     it.name,
                     it.slug,
                     null,
-                    false)
+                    false
+                )
                 stationDao?.addStation(station)
             }
 
@@ -109,19 +108,17 @@ class SplashActivity  : AppCompatActivity () {
                     it.name,
                     it.slug,
                     null,
-                    false)
+                    false
+                )
                 stationDao?.addStation(station)
             }
 
         }
 
-
-
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        },5000)
+        }, 3000)
     }
-
 }

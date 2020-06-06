@@ -6,8 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -116,7 +114,7 @@ class QRCodeActivity  : AppCompatActivity(), ZXingScannerView.ResultHandler  {
             }
 
         builder.setNeutralButton("Voir les horaires") { _, _ ->
-                val intent = Intent(this, AfficherHorairesActivity :: class.java)
+                val intent = Intent(this, QRScheduleActivity :: class.java)
             intent.putExtra("station", nameStation)
                 this.startActivity(intent)
         }

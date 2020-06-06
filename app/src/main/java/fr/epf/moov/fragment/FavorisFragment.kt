@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,13 +56,12 @@ class FavorisFragment : Fragment() {
         stationRecyclerview.adapter =
             StationFavAdapter(favStations)
 
-        if(favStations.isNullOrEmpty()){
+        if (favStations.isNullOrEmpty()) {
             empty_favoris_cardview.visibility = View.VISIBLE
-        } else{
+        } else {
             stationRecyclerview.visibility = View.VISIBLE
         }
 
-
-            return view
+        return view
     }
 }
